@@ -1,9 +1,9 @@
 import React from 'react'
 
-function CardMaker() {
+function cardmaker() {
   return (
-    <div>CardMaker</div>
+    <div>cardmaker</div>
   )
 }
 
-export default CardMaker
+export default cardmaker
