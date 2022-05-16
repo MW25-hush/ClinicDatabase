@@ -2,7 +2,7 @@
 import { firestore } from '../firebase/clientApp';
 import {collection,getDocs} from "@firebase/firestore";
 import { useState ,useEffect} from 'react';
-import {SearchCircleIcon, PlusCircleIcon , EmojiSadIcon} from '@heroicons/react/outline'
+import {SearchCircleIcon, PlusCircleIcon , EmojiSadIcon } from '@heroicons/react/outline'
 import CardMaker from '../components/cardmaker';
 import Image from 'next/image';
 import loading from '../public/loading.svg'

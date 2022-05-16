@@ -1,7 +1,6 @@
       import React from 'react'
       import InputMaker from '../components/inputMaker'
       import Table from '../components/Chart'
-      import ToothPopUpModal from '../components/toothPopUpModal';
 
     function register() {
       return (
@@ -34,7 +33,7 @@
                         
                         {/* chekcboxes   */}
                           {/* HIV and family secion  */}
-                        <h4 className='font-semibold p-2 w-full '>Diagnosis: </h4>
+                        <h4 className='font-semibold p-2 w-full '>Hypothesis: </h4>
                         <div className='w-full flex'>
                           <InputMaker type='checkbox' name='HIV'  label="HIV" styling={{labelStyling: 'p-2' , size: 'p-2 text-indigo-500' }}/>
                           <InputMaker type='checkbox' name='HCV'  label="HCV" styling={{labelStyling: 'p-2' , size: 'p-2 text-indigo-500' }}/>
@@ -50,8 +49,7 @@
 
               {/* chart section  */}
               <Table />
-
-              <ToothPopUpModal />
+             
 
             </div>
         </div>
