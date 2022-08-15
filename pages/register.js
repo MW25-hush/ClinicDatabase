@@ -1,22 +1,23 @@
       import React from 'react'
       import InputMaker from '../components/inputMaker'
-      import Table from '../components/Chart'
+      import Table from '../components/Chart';
 
     function register() {
       return (
         <div >
-            <h1 className='text-center py-2 font-bold text-2xl'>Registration Form</h1>
+            <h1 className='pl-7 py-4 font-bold text-2xl'>Registration Form</h1>
                 {/* //* card for the registration form  */}
-            <div className='bg-gray-200 h-3/4 w-10/12 shadow-md mx-auto mt-8 grid grid-cols-8'>
-               <form className='flex col-span-5 flex-wrap '>
+               <form >
+            <div className='grid grid-cols-8 mx-7'>
+                <div className='flex col-span-5 flex-wrap md:w-10/1  xl:w-11/12   '>
                   {/* //? Name input  */}
-                        <InputMaker type="text" name='name'  label="Name" styling={{labelStyling: 'block' , size: 'lg:w-72'}}/>
+                        <InputMaker type="text" name='name'  label="Name" styling={{labelStyling: 'block' , size: ' lg:w-60 xl:w-80'}}/>
                            {/* //? Last Name input  */}
-                        <InputMaker type='text' name="lastname"  label="Last Name" styling={{labelStyling: 'block' , size: 'lg:w-72'}}/>
+                        <InputMaker type='text' name="lastname"  label="Last Name" styling={{labelStyling: 'block' , size: ' lg:w-60  xl:w-80'}}/>
                        {/* Age Input  */}
-                          <InputMaker type='number' name={'age'}  label="Age" styling={{labelStyling: 'block' , size: 'w-48' }}/>
+                          <InputMaker type='number' name={'age'}  label="Age" styling={{labelStyling: 'block' , size: '   ' }}/>
                         {/* Job input */}
-                         <InputMaker type='text' name="job"  label="Job"  styling={{labelStyling: 'block' , size: 'w-64'}}/>
+                         <InputMaker type='text' name="job"  label="Job"  styling={{labelStyling: 'block' , size: ' '}}/>
                          {/* sex input  */}
                          <div className='flex items-center w-full '>
                           <p className=' px-2 font-semibold '>{'Gender:'}</p>
@@ -45,13 +46,14 @@
                           <InputMaker type='checkbox' name='pregnancy'  label="Pregnancy" styling={{labelStyling: 'p-2' , size: 'p-2 text-indigo-500' }}/>
                           <InputMaker type='checkbox' name='diabetes'  label="Diabetes" styling={{labelStyling: 'p-2' , size: 'p-2 text-indigo-500' }}/>
                         </div>
-                </form>
 
+                        </div>
+                      
               {/* chart section  */}
-              <Table />
-             
+                      <Table />
 
             </div>
+                </form>
         </div>
       )
     }

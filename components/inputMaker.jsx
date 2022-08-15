@@ -11,7 +11,7 @@ function InputMaker({ type, name, label, ...styling }) {
         type={type}
         name={name}
         id={name}
-        className={`${styling.styling.size}  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md`}
+        className={`${styling.styling.size}  focus:ring-black focus:border-black sm:text-sm border-gray-300 rounded-md`}
       />
     </div>
   );
