@@ -1,3 +1,4 @@
+
 function InputMaker({ type, name, label, ...styling }) {
   return (
     <div className="p-2 ">

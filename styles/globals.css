@@ -9,4 +9,10 @@
         margin: 0;
       }
 
+      @layer components {
+        .customizeForm{
+          @apply rounded h-10 focus:ring-black focus:border-black p-0 w-full 
+        }
+        
+      }
 

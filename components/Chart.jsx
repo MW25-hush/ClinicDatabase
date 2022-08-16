@@ -1,5 +1,6 @@
+import { Field } from 'formik';
 import React from 'react'
-import InputMaker from './inputMaker'
+
 import ToothPopUpModal from '../components/toothPopUpModal';
 
 
@@ -20,7 +21,7 @@ function Chart() {
             Tooth Filling 
           </td>
           <td className='border border-slate-600  pl-2'>
-          <InputMaker type='checkbox' name='orthodancy'   styling={{labelStyling: '' , size: 'p-2 text-black w-2/3' }}/>
+          <Field type='checkbox' name='toothfilling'  className="customizeForm" />
           </td>
         </tr>
 
@@ -29,7 +30,7 @@ function Chart() {
             Orthodancy
           </td>
           <td className='border border-slate-600 pl-2'>
-          <InputMaker type='checkbox' name='orthodancy'   styling={{labelStyling: '' , size: 'p-2 text-black w-2/3' }}/>
+          <Field type='checkbox' name='orthodancy'  className="customizeForm" />
           </td>
         </tr>
 
@@ -38,7 +39,7 @@ function Chart() {
             Implant
           </td>
           <td className='border border-slate-600 pl-2'>
-          <InputMaker type='checkbox' name='Implant'   styling={{labelStyling: '' , size: 'p-2 text-black w-2/3' }}/>
+          <Field type='checkbox' name='Implant' className="customizeForm" />
           </td>
         </tr>
 
@@ -48,7 +49,7 @@ function Chart() {
             Crown 
           </td>
           <td className='border border-slate-600 pl-2'>
-          <InputMaker type='checkbox' name='Crown'   styling={{labelStyling: '' , size: 'p-2 text-black w-2/3' }}/>
+          <Field type='checkbox' name='Crown'  className="customizeForm" />
           </td>
         </tr>
 
@@ -57,7 +58,7 @@ function Chart() {
             Bleaching
           </td>
           <td className='border border-slate-600 pl-2'>
-          <InputMaker type='checkbox' name='bleaching'   styling={{labelStyling: '' , size: 'p-2 text-black w-2/3' }}/>
+          <Field type='checkbox' name='bleaching'  className="customizeForm" />
           </td>
         </tr>
 
@@ -66,7 +67,7 @@ function Chart() {
             Prosthesis
           </td>
           <td className='border border-slate-600 pl-2'>
-          <InputMaker type='checkbox' name='prosthesis'   styling={{labelStyling: '' , size: 'p-2 text-black w-2/3' }}/>
+          <Field type='checkbox' name='prosthesis'  className="customizeForm"/>
           </td>
         </tr>
 
