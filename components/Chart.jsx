@@ -21,7 +21,7 @@ function Chart() {
             Tooth Filling 
           </td>
           <td className='border border-slate-600  pl-2'>
-          <Field type='checkbox' name='toothfilling'  className="customizeForm" />
+          <Field type='checkbox' name='toothfilling '  className="customizeForm" />
           </td>
         </tr>
 
@@ -80,3 +80,5 @@ function Chart() {
 }
 
 export default Chart
+
+// todo add payment info 
