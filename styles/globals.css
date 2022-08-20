@@ -11,8 +11,19 @@
 
       @layer components {
         .customizeForm{
-          @apply rounded h-10 focus:ring-black focus:border-black p-0 w-full 
+          @apply rounded h-10 focus:ring-mygreen focus:border-mygreen focus:border-2  p-0 w-full bg-gray-700 
         }
-        
+        .navicon{
+          @apply h-12 w-11 text-white group-hover:text-black lg:ml-5 xl:ml-7
+        }
+
+        .check{
+        @apply text-mygreen focus:ring-mygreen border-mygreen bg-gray-700 border-2
+        }
+
+         tbody > tr:nth-child(even){
+            @apply  bg-slate-600
+          }
+
       }
 

@@ -4,7 +4,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        mygreen: '#029F08'
+      }
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),

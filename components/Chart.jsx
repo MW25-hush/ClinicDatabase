@@ -1,80 +1,80 @@
 import { Field } from 'formik';
-import React from 'react'
 
-import ToothPopUpModal from '../components/toothPopUpModal';
 
 
 function Chart() {
   return (
-    <div className='col-span-3 mr-5 '>
-    <table className=' bg-gray-10  w-full my-2  '>
-    <thead className='bg-black text-white'> 
-      <tr>
-      <th className='border border-slate-600'>Operation</th>
-      <th className='border border-slate-600'></th>
+    <div className='mx-5 border  border-slate-600 rounded xl:w-8/12 xl:my-20'>
+    <table className=' w-full'>
+    <thead className='bg-black text-white border-b border-slate-600'> 
+      <tr className=''>
+      <th className=''>Operation</th>
+      <th></th>
       </tr>
     </thead>
 
-    <tbody >
-        <tr>
-          <td className='border border-slate-600  pl-2'>
-            Tooth Filling 
+    <tbody className='text-white  ' >
+        <tr className=''>
+          <td className='pl-2'>
+           <span>Tooth Filling</span>  
           </td>
-          <td className='border border-slate-600  pl-2'>
-          <Field type='checkbox' name='toothfilling '  className="customizeForm" />
+
+          <td className='pl-2 text-center '>
+          <Field type='checkbox' name='toothfilling '  className="rounded check w-7 h-7 border-slate-600 " />
+          </td>
+
+        </tr>
+
+        <tr className=' '>
+          <td className='pl-2'>
+            Orthodantics
+          </td>
+          <td className=' pl-2 text-center'>
+          <Field type='checkbox' name='orthodancy'  className="rounded check w-7 h-7 border-slate-600" />
           </td>
         </tr>
 
-        <tr>
-          <td className='border border-slate-600 pl-2'>
-            Orthodancy
-          </td>
-          <td className='border border-slate-600 pl-2'>
-          <Field type='checkbox' name='orthodancy'  className="customizeForm" />
-          </td>
-        </tr>
-
-        <tr>
-          <td className='border border-slate-600 pl-2'>
+        <tr className=''>
+          <td className=' pl-2'>
             Implant
           </td>
-          <td className='border border-slate-600 pl-2'>
-          <Field type='checkbox' name='Implant' className="customizeForm" />
+          <td className=' pl-2 text-center'>
+          <Field type='checkbox' name='Implant' className="rounded check w-7 h-7 border-slate-600" />
           </td>
         </tr>
 
 
         <tr>
-          <td className='border border-slate-600 pl-2'>
+          <td className=' pl-2'>
             Crown 
           </td>
-          <td className='border border-slate-600 pl-2'>
-          <Field type='checkbox' name='Crown'  className="customizeForm" />
+          <td className=' pl-2 text-center'>
+          <Field type='checkbox' name='Crown'  className="rounded check w-7 h-7 border-slate-600" />
           </td>
         </tr>
 
         <tr>
-          <td className='border border-slate-600 pl-2'>
+          <td className=' pl-2'>
             Bleaching
           </td>
-          <td className='border border-slate-600 pl-2'>
-          <Field type='checkbox' name='bleaching'  className="customizeForm" />
+          <td className=' pl-2 text-center'>
+          <Field type='checkbox' name='bleaching'  className="rounded check w-7 h-7 border-slate-600" />
           </td>
         </tr>
 
         <tr>
-          <td className='border border-slate-600 pl-2'>
+          <td className=' pl-2'>
             Prosthesis
           </td>
-          <td className='border border-slate-600 pl-2'>
-          <Field type='checkbox' name='prosthesis'  className="customizeForm"/>
+          <td className=' pl-2 text-center'>
+          <Field type='checkbox' name='prosthesis'  className="rounded check w-7 h-7 border-slate-600"/>
           </td>
         </tr>
 
 
     </tbody>
 </table>
-<ToothPopUpModal />
+
 </div>
   )
 }

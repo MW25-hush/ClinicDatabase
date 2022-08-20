@@ -1,5 +1,6 @@
 .tooth_chart {
   width: 350px;
+  fill: white;
 }
 
 .Spots polygon {
@@ -27,3 +28,4 @@
 .Spots path:active {
   fill: #dddddd !important;
 }
+

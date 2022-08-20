@@ -45,7 +45,7 @@ function Tooth() {
  
       console.log(checked);
   return (
-    <div className={styles.tooth_chart}>
+    <div className={`${styles.tooth_chart} `}>
       <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@ function Tooth() {
         enableBackground="new 0 0 450 700"
         xmlSpace="preserve"
       >
-        <g id="toothLabels">
+        <g id="toothLabels" className={styles.toothLabels}>
           <text
             id="lbl32"
             transform="matrix(1 0 0 1 97.9767 402.1409)"
@@ -77,8 +77,8 @@ function Tooth() {
             id="lbl30"
             transform="matrix(1 0 0 1 106.0002 495.5433)"
             fontFamily="'Avenir-Heavy'"
-            fontSize="21px"
-          >
+            fontSize="21px" 
+            >
             6
           </text>
           <text
