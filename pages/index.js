@@ -26,12 +26,12 @@ import Navbar from '../components/navbar';
 
  
   if (data !== undefined) return (
-    <div className='flex bg-black'>
+    <div className='flex bg-black overflow-auto h-screen '>
       {/* //* Navbar */}
          <Navbar />
       {/* list of patients  */}
-        <div className=' text-center h-screen grow  '>
-          <h1 className='text-black pt-2  text-xl'> <strong>M@W</strong> Clinic Database </h1>
+        <div className=' text-center  grow  '>
+          <h1 className='text-black pt-2 text-xl'> <strong>M@W</strong> Clinic Database </h1>
             {/*  //* card section  */}
           <div className='  '>
             {data.length != 0 ?  data.map(info => {<CardMaker/>}) : <h3 className='capitalize font-semibold text-gray-500 py-72 text-2xl'>the list is empty {<FaRegSadTear className='h-10 inline-block pl-1 mb-1'/>} </h3>}

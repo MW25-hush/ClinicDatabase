@@ -39,7 +39,7 @@ function Chart() {
             Implant
           </td>
           <td className=' pl-2 text-center'>
-          <Field type='checkbox' name='Implant' className="rounded check w-7 h-7 border-slate-600" />
+          <Field type='checkbox' name='implant' className="rounded check w-7 h-7 border-slate-600" />
           </td>
         </tr>
 
@@ -49,7 +49,7 @@ function Chart() {
             Crown 
           </td>
           <td className=' pl-2 text-center'>
-          <Field type='checkbox' name='Crown'  className="rounded check w-7 h-7 border-slate-600" />
+          <Field type='checkbox' name='crown'  className="rounded check w-7 h-7 border-slate-600" />
           </td>
         </tr>
 
