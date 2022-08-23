@@ -10,6 +10,14 @@
       import {doc, setDoc} from 'firebase/firestore'
       import { firestore } from '../firebase/clientApp';
 
+    const checkbox = [
+  { label: "Tooth Filling", value: "toothfilling", name: "checkbox" },
+  { label: "Orthodantic", value: "orthodancy", name: "checkbox" },
+  { label: "Implant", value: "implant", name: "checkbox" },
+  { label: "Crown", value: "crown", name: "checkbox" },
+  { label: "Bleaching", value: "bleaching", name: "checkbox" },
+  { label: "Prosthesis", value: "prosthesis", name: "checkbox" },
+];
 
       const initialValues = {
           name : '',
@@ -28,12 +36,8 @@
           diabetes: false, 
           reflux: false, 
           observation: '',
-          toothfilling: false,
-          orthodancy: false,
-          implant : false,
-          crown : false, 
-          bleaching : false, 
-          prosthesis : false
+          ops : []
+       
       }
           //todo validate the checkboxes and how to do it with yup and radio buttons 
      const validationSchema = Yup.object().shape({
@@ -44,7 +48,8 @@
           phonenumber : Yup.string().length(9, 'please enter the 9 digits of your phone number').required('You need to fill this field'),
           payment : Yup.string().required('You need to fill this field'),
           sex : Yup.string().oneOf(['male','female']).required('You should select a gender'),
-          marital : Yup.string().oneOf(['married', 'single']).required('you should select one option')
+          marital : Yup.string().oneOf(['married', 'single']).required('you should select one option'),
+          ops : Yup.array().required('Required')
      }) 
 
      
@@ -99,36 +104,32 @@
        
 
         const handleSubmit = (values,{resetForm}) => {
+          console.log(values);
           // * todo the submit functionality 
-            setDoc(doc(firestore,"user", values.phonenumber.toString()),{
-               name : values.name,
-               last_name  :values.lastname,
-               address: values.address,
-               age : values.age,
-               phone_number : values.phonenumber,
-               payment_amount : values.payment,
-               job : values.job,
-               sex : values.sex , 
-               marital : values.marital, 
-               hiv : values.HIV,
-               hcv : values.HCV,
-               hbs : values.HBS,
-               pregnancy : values.pregnancy,
-               diabetes : values.diabetes ,
-               reflux : values.reflux,
-               observation : values.observation ,
-              toothfilling  : values.toothfilling,
-              orthodancy : values.orthodancy,
-              implant : values.implant, 
-              crown : values.crown , 
-              bleaching : values.bleaching, 
-              prosthesis : values.prosthesis,
-              chart  : checked
+            // setDoc(doc(firestore,"user", values.phonenumber.toString()),{
+            //    name : values.name,
+            //    last_name  :values.lastname,
+            //    address: values.address,
+            //    age : values.age,
+            //    phone_number : values.phonenumber,
+            //    payment_amount : values.payment,
+            //    job : values.job,
+            //    sex : values.sex , 
+            //    marital : values.marital, 
+            //    hiv : values.HIV,
+            //    hcv : values.HCV,
+            //    hbs : values.HBS,
+            //    pregnancy : values.pregnancy,
+            //    diabetes : values.diabetes ,
+            //    reflux : values.reflux,
+            //    observation : values.observation ,
+            //    ops : values.checkbox,
+            //    chart  : checked
 
 
-            })
-            // todo to find the response property out of the firestore 
-            .then(res => console.log(res))
+            // })
+            // // todo to find the response property out of the firestore 
+            // .then(res => console.log(res))
           
         }
 
@@ -146,7 +147,7 @@
 
                   <div>
                 {/* //* registration form  */}
-               <Formik enableReinitialize initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema} >
+               <Formik  initialValues={initialValues} onSubmit={handleSubmit}  >
                 <Form>
 
                   {/* //*  info section  */}
@@ -295,7 +296,7 @@
                                     </button>
 
                                   {/* table  */}
-                                      <Table/>
+                                            <Table/>
                                 </div>
                                   {/* chart part d */}
                                 <div className='col-span-1'>

@@ -28,7 +28,7 @@ function Chart() {
           </td>
 
           <td className='pl-2 text-center '>
-          <Field type='checkbox' name='toothfilling '  className="rounded check w-7 h-7 border-slate-600 " />
+          <Field type='checkbox' value='toothfilling ' name='ops' className="rounded check w-7 h-7 border-slate-600 " />
           </td>
 
         </tr>
@@ -38,7 +38,7 @@ function Chart() {
             Orthodantics
           </td>
           <td className=' pl-2 text-center'>
-          <Field type='checkbox' name='orthodancy'  className="rounded check w-7 h-7 border-slate-600" />
+          <Field type='checkbox' value='orthodancy' name='ops'  className="rounded check w-7 h-7 border-slate-600" />
           </td>
         </tr>
 
@@ -47,7 +47,7 @@ function Chart() {
             Implant
           </td>
           <td className=' pl-2 text-center'>
-          <Field type='checkbox' name='implant' className="rounded check w-7 h-7 border-slate-600" />
+          <Field type='checkbox' value='implant' name='ops' className="rounded check w-7 h-7 border-slate-600" />
           </td>
         </tr>
 
@@ -57,7 +57,7 @@ function Chart() {
             Crown 
           </td>
           <td className=' pl-2 text-center'>
-          <Field type='checkbox' name='crown'  className="rounded check w-7 h-7 border-slate-600" />
+          <Field type='checkbox' value='crown' name='ops'  className="rounded check w-7 h-7 border-slate-600" />
           </td>
         </tr>
 
@@ -66,7 +66,7 @@ function Chart() {
             Bleaching
           </td>
           <td className=' pl-2 text-center'>
-          <Field type='checkbox' name='bleaching'  className="rounded check w-7 h-7 border-slate-600" />
+          <Field type='checkbox' value='bleaching' name='ops' className="rounded check w-7 h-7 border-slate-600" />
           </td>
         </tr>
 
@@ -75,7 +75,7 @@ function Chart() {
             Prosthesis
           </td>
           <td className=' pl-2 text-center'>
-          <Field type='checkbox' name='prosthesis'  className="rounded check w-7 h-7 border-slate-600"/>
+          <Field type='checkbox' value='prosthesis' name='ops' className="rounded check w-7 h-7 border-slate-600"/>
           </td>
         </tr>
 

@@ -33,7 +33,7 @@ const Navbar = () => {
                </div>
              {/* register icon  */}
                  <div className={`w-full h-14 hover:bg-white group ${router.route === '/register' ? 'bg-white' : ''}`}>
-                   <Link href="register" passHref >
+                   <Link href="/register" passHref >
                      <a>
                      <FiPlusCircle className={`navicon ${router.route === '/register' ? 'text-black' : 'text-white'}`}/>
                      </a>
@@ -41,7 +41,7 @@ const Navbar = () => {
                  </div>
              {/* payment icon  */}
                  <div className={`w-full h-14 hover:bg-white group ${router.route === '/payment' ? 'bg-white' : ''}`}>
-                  <Link href={'payment'} passHref>
+                  <Link href={'/payment'} passHref>
                   <a>
                      <AiOutlineDollarCircle className={`navicon ${router.route === '/payment' ? 'text-black' : 'text-white'}`}/>
                   </a>

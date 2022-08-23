@@ -1,0 +1,14 @@
+  {checkbox.map((op) => (
+            <tr key={op.label}>
+              <td className="pl-2">
+                <span>{op.label}</span>
+              </td>
+              <td className="pl-2 text-center">
+                <Field
+                  name={op.name}              
+                  className="check rounded border-slate-600 w-5 h-5 "
+                  type="checkbox"
+                  value={op.value}
+                  />
+              </td>
+            </tr>
