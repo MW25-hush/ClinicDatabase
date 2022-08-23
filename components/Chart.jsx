@@ -1,5 +1,13 @@
 import { Field } from 'formik';
 
+const operations = [
+  {label : 'Tooth Filling', name : 'toothfilling'  },
+  {label : 'Orthodantic', name : 'orthodancy'  },
+  {label : 'Implant', name : 'implant'  },
+  {label : 'Crown', name : 'crown'  },
+  {label : 'Bleaching', name : 'bleaching'  },
+  {label : 'Prosthesis', name : 'prosthesis'  },
+];
 
 
 function Chart() {

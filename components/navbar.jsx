@@ -25,7 +25,7 @@ const Navbar = () => {
                      </div>
              {/* search icon */}
                <div  className={`w-full h-14 hover:bg-white group ${router.route === '/search' ? 'bg-white' : ''} `}>
-               <Link href={'serach'} passHref>
+               <Link href={'/search'} passHref>
                  <a>
                   <AiOutlineSearch className={`navicon ${router.route === '/search' ? 'text-black' : 'text-white'} `}/>
                  </a>

@@ -7,7 +7,10 @@
       import Tooth from '../components/tooth'
       import {IoChevronBackOutline} from 'react-icons/io5'
       import * as Yup from 'yup'
-      
+      import {doc, setDoc} from 'firebase/firestore'
+      import { firestore } from '../firebase/clientApp';
+
+
       const initialValues = {
           name : '',
           lastname: '',
@@ -39,22 +42,93 @@
           address : Yup.string().required('You need to fill this filed'),
           age: Yup.string().required('You need to fill this field'),
           phonenumber : Yup.string().length(9, 'please enter the 9 digits of your phone number').required('You need to fill this field'),
-          payment : Yup.string().required('You need to fill this field')
+          payment : Yup.string().required('You need to fill this field'),
+          sex : Yup.string().oneOf(['male','female']).required('You should select a gender'),
+          marital : Yup.string().oneOf(['married', 'single']).required('you should select one option')
      }) 
 
      
 
       function Register() {
          const [active,setActive] = useState({infoActive: true, chartActive: false})
+         const [checked, setChecked] = useState({
+          OneTr: false,
+          TwoTr: false,
+          ThreeTr: false,
+          FourTr: false,
+          FiveTr: false,
+          SixTr: false,
+          SevenTr: false,
+          EightTr: false,
+          OneTl: false,
+          TwoTl: false,
+          ThreeTl: false,
+          FourTl: false,
+          FiveTl: false,
+          SixTl: false,
+          SevenTl: false,
+          EigthTl: false,
+          OneBr: false,
+          TwoBr: false,
+          ThreeBr: false,
+          FourBr: false,
+          FiveBr: false,
+          SixBr: false,
+          SevenBr: false,
+          EightBr: false,
+          OneBl: false,
+          TwoBl: false,
+          ThreeBl: false,
+          FourBl: false,
+          FiveBl: false,
+          SixBl: false,
+          SevenBl: false,
+          EightBl: false,
+        });
+      
+        const handleClickSvg = (data) => {
+            let temp = data.target.id
+            setChecked({...checked , [temp] : !checked[temp] })
+        };
 
          const handleClick = type => {
           if(type == 'info') setActive({infoActive : true, chartActive : false})
           if(type == 'chart') setActive({infoActive : false , chartActive : true})
         }
 
-        const handleSubmit = values => {
+       
+
+        const handleSubmit = (values,{resetForm}) => {
           // * todo the submit functionality 
-          console.log(values);
+            setDoc(doc(firestore,"user", values.phonenumber.toString()),{
+               name : values.name,
+               last_name  :values.lastname,
+               address: values.address,
+               age : values.age,
+               phone_number : values.phonenumber,
+               payment_amount : values.payment,
+               job : values.job,
+               sex : values.sex , 
+               marital : values.marital, 
+               hiv : values.HIV,
+               hcv : values.HCV,
+               hbs : values.HBS,
+               pregnancy : values.pregnancy,
+               diabetes : values.diabetes ,
+               reflux : values.reflux,
+               observation : values.observation ,
+              toothfilling  : values.toothfilling,
+              orthodancy : values.orthodancy,
+              implant : values.implant, 
+              crown : values.crown , 
+              bleaching : values.bleaching, 
+              prosthesis : values.prosthesis,
+              chart  : checked
+
+
+            })
+            // todo to find the response property out of the firestore 
+            .then(res => console.log(res))
           
         }
 
@@ -72,7 +146,7 @@
 
                   <div>
                 {/* //* registration form  */}
-               <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema} >
+               <Formik enableReinitialize initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema} >
                 <Form>
 
                   {/* //*  info section  */}
@@ -133,6 +207,7 @@
 
                           {/* column 2 and payment section   */}
                               <div className='col-span-1 space-y-5 xl:ml-16 xl:mt-3'>
+                                
                                  {/* sex input  */}
                                   <div className='flex items-center w-full text-white gap-2'>
                                   <p className=' font-semibold '>{'Gender:'}</p>
@@ -141,6 +216,7 @@
                                   <label>Female</label>
                                   <Field type='radio' name="sex" value="female" className="check" /> 
                                   </div>
+                                  <ErrorMessage name='sex' render={msg => <div className="text-red-500 font-medium capitalize">{msg}</div>} />
 
                               {/* marital input  */}
                                 <div role={'group'} className='flex items-center w-full text-white gap-2'>
@@ -150,6 +226,7 @@
                                 <label>Single</label>
                                 <Field type='radio' name="marital" value="single" className="check" />
                                 </div>
+                                <ErrorMessage name='marital' render={msg => <div className="text-red-500 font-medium capitalize ">{msg}</div>} />
 
                           
                           {/* chekcboxes   */}
@@ -222,7 +299,7 @@
                                 </div>
                                   {/* chart part d */}
                                 <div className='col-span-1'>
-                                   <Tooth />
+                                   <Tooth checked={checked} handleClickSvg={handleClickSvg} />
                                 </div>
                                    <button type='submit' className='bg-mygreen text-white rounded col-span-2 h-8 w-5/12  xl:w-1/3 2xl:w-5/12 mx-72 xl:mx-80  mt-1 xl:mt-20 hover:bg-green-800 hover:font-semibold'>Save</button>
                           </div>

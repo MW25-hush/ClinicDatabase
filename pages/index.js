@@ -11,7 +11,7 @@ import Navbar from '../components/navbar';
 
  function Home() {
   const [data, setData] = useState()
-  const patientsCollection = collection(firestore,'Patients');
+  const patientsCollection = collection(firestore,'user');
 
   useEffect(() => {
     getDocs(patientsCollection).then((snapshot) => {
@@ -23,6 +23,8 @@ import Navbar from '../components/navbar';
       })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
+
+ 
 
  
   if (data !== undefined) return (
