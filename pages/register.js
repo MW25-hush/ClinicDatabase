@@ -10,14 +10,7 @@
       import {doc, setDoc} from 'firebase/firestore'
       import { firestore } from '../firebase/clientApp';
 
-    const checkbox = [
-  { label: "Tooth Filling", value: "toothfilling", name: "checkbox" },
-  { label: "Orthodantic", value: "orthodancy", name: "checkbox" },
-  { label: "Implant", value: "implant", name: "checkbox" },
-  { label: "Crown", value: "crown", name: "checkbox" },
-  { label: "Bleaching", value: "bleaching", name: "checkbox" },
-  { label: "Prosthesis", value: "prosthesis", name: "checkbox" },
-];
+      // ! This whole page needs refactorization 
 
       const initialValues = {
           name : '',
@@ -49,7 +42,7 @@
           payment : Yup.string().required('You need to fill this field'),
           sex : Yup.string().oneOf(['male','female']).required('You should select a gender'),
           marital : Yup.string().oneOf(['married', 'single']).required('you should select one option'),
-          ops : Yup.array().required('Required')
+          ops : Yup.array().min(1, 'One Operation Must be Selected').of(Yup.string().required()).required()
      }) 
 
      
@@ -104,33 +97,29 @@
        
 
         const handleSubmit = (values,{resetForm}) => {
-          console.log(values);
-          // * todo the submit functionality 
-            // setDoc(doc(firestore,"user", values.phonenumber.toString()),{
-            //    name : values.name,
-            //    last_name  :values.lastname,
-            //    address: values.address,
-            //    age : values.age,
-            //    phone_number : values.phonenumber,
-            //    payment_amount : values.payment,
-            //    job : values.job,
-            //    sex : values.sex , 
-            //    marital : values.marital, 
-            //    hiv : values.HIV,
-            //    hcv : values.HCV,
-            //    hbs : values.HBS,
-            //    pregnancy : values.pregnancy,
-            //    diabetes : values.diabetes ,
-            //    reflux : values.reflux,
-            //    observation : values.observation ,
-            //    ops : values.checkbox,
-            //    chart  : checked
-
-
-            // })
-            // // todo to find the response property out of the firestore 
-            // .then(res => console.log(res))
-          
+          //? Use ResetForm when the response is taken from the firestore 
+            setDoc(doc(firestore,"user", values.phonenumber.toString()),{
+               name : values.name,
+               last_name  :values.lastname,
+               address: values.address,
+               age : values.age,
+               phone_number : values.phonenumber,
+               payment_amount : values.payment,
+               job : values.job,
+               sex : values.sex , 
+               marital : values.marital, 
+               hiv : values.HIV,
+               hcv : values.HCV,
+               hbs : values.HBS,
+               pregnancy : values.pregnancy,
+               diabetes : values.diabetes ,
+               reflux : values.reflux,
+               observation : values.observation ,
+               ops : values.ops,
+               chart  : checked
+            })
+            // todo to find the response property out of the firestore 
+            .then(res => console.log(res))
         }
 
         
@@ -147,7 +136,7 @@
 
                   <div>
                 {/* //* registration form  */}
-               <Formik  initialValues={initialValues} onSubmit={handleSubmit}  >
+               <Formik  initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}  >
                 <Form>
 
                   {/* //*  info section  */}

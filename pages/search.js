@@ -1,9 +1,14 @@
 import React from 'react'
+import Navbar from '../components/navbar'
 
-function search() {
+function Search() {
   return (
-    <div>search</div>
+    <div className='bg-black'>
+        {/* navbar */}
+        <Navbar />
+        {/*  */}
+    </div>
   )
 }
 
-export default search
+export default Search
