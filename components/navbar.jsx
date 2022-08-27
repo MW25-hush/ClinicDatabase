@@ -24,10 +24,10 @@ const Navbar = () => {
                       </Link>
                      </div>
              {/* search icon */}
-               <div  className={`w-full h-14 hover:bg-white group ${router.route === '/search' ? 'bg-white' : ''} `}>
+               <div  className={`w-full h-14 hover:bg-white group ${router.route === '/search' || router.route === '/search/[id]' ? 'bg-white' : ''} `}>
                <Link href={'/search'} passHref>
                  <a>
-                  <AiOutlineSearch className={`navicon ${router.route === '/search' ? 'text-black' : 'text-white'} `}/>
+                  <AiOutlineSearch className={`navicon ${router.route === '/search' || router.route === '/search/[id]' ? 'text-black' : 'text-white'} `}/>
                  </a>
                </Link>
                </div>
