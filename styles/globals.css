@@ -21,6 +21,10 @@
         @apply text-mygreen focus:ring-mygreen border-mygreen bg-gray-700 border-2
         }
 
+        .customValueForm{
+          @apply  p-0 block bg-slate-700 border-0 border-b-2 border-slate-600 placeholder:capitalize  w-32 capitalize text-white
+        }
+
          tbody > tr:nth-child(even){
             @apply  bg-slate-600
           }
