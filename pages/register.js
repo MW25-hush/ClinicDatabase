@@ -1,7 +1,6 @@
    
    
       import React, { useState } from 'react'
-      import Table from '../components/Chart';
       import { ErrorMessage, Field,Form, Formik } from 'formik';
       import Navbar from '../components/navbar'
       import Tooth from '../components/tooth'
@@ -9,6 +8,7 @@
       import * as Yup from 'yup'
       import {doc, setDoc} from 'firebase/firestore'
       import { firestore } from '../firebase/clientApp';
+      import Chart from '../components/Chart';
 
       // ! This whole page needs refactorization 
 
@@ -48,7 +48,9 @@
      
 
       function Register() {
+        // the state for the two links in the page 1 info 2 chart
          const [active,setActive] = useState({infoActive: true, chartActive: false})
+        //  the state of the teeth 
          const [checked, setChecked] = useState({
           OneTr: false,
           TwoTr: false,
@@ -285,7 +287,7 @@
                                     </button>
 
                                   {/* table  */}
-                                            <Table/>
+                                            <Chart disabled={false}/>
                                 </div>
                                   {/* chart part d */}
                                 <div className='col-span-1'>

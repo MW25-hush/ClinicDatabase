@@ -10,11 +10,11 @@ const operations = [
 ];
 
 
-function Chart() {
+function Chart({chartStyle,checked, disabled}) {
   return (
     <>
-    <div className='mx-5 border border-slate-600 rounded xl:w-8/12 xl:mt-20 mb-2'>
-    <table className='w-full'>
+    <div className={`mx-5 border border-slate-600 rounded xl:w-8/12  xl:mt-20 mb-2  ${chartStyle?.head}`}>
+    <table className={`w-full ${chartStyle.table}`}>
     <thead className='bg-black text-white border-b border-slate-600'> 
       <tr className=''>
       <th className=''>Operation</th>
@@ -22,9 +22,9 @@ function Chart() {
       </tr>
     </thead>
 
-        <tbody className='text-white  ' >
+        <tbody className='text-white ' >
         {operations.map((op) => (
-                <tr key={op.label}>
+                <tr key={op.label} className={chartStyle?.body}>
                   <td className="pl-2">
                     <span>{op.label}</span>
                   </td>
@@ -34,6 +34,8 @@ function Chart() {
                       className="check rounded border-slate-600 w-5 h-5 "
                       type="checkbox"
                       value={op.value}
+                      checked={checked ? op.value.includes(checked) : null}
+                      disabled={disabled}
                       />
                     </td>
                   </tr>
