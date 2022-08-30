@@ -33,7 +33,7 @@ function Search({ patientsList }) {
       <Navbar />
 
       {/* header */}
-      <div className="grow ">
+      <div className="grow">
         <h1 className="text-white text-3xl font-bold font-serif pt-10 px-8">
           Search
         </h1>

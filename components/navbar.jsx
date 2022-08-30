@@ -1,20 +1,19 @@
-import Link from 'next/link'
-import { useState } from 'react'
-import { AiOutlineDollarCircle, AiOutlineHome, AiOutlineSearch } from 'react-icons/ai'
+import Link from 'next/link';
+import { AiOutlineDollarCircle, AiOutlineHome, AiOutlineSearch } from 'react-icons/ai';
 import { FiPlusCircle } from 'react-icons/fi';
-import {useRouter} from 'next/router'
+import {useRouter} from 'next/router';
 
 const Navbar = () => {
     const router = useRouter();  
 
         return  (
-          <div className="bg-mygreen text-white w-1/12 lg:w-32 py-4 grid">
+          <div className="bg-mygreen  text-white py-4 grid w-32">
           {/* logo */}
-               <h1 className='text-white text-lg mx-auto'>M@W</h1>
-      
-               <div className='space-y-14 overflow-hidden'>
-                 {/* //todo make the every icon container animated and on cliced it must have state showing 
-                 //todo which one is active  */}
+                 <h1 className='text-white text-lg mx-auto'>M@W</h1>
+
+               <div className='space-y-14 overflow-hidden '>
+                 {/* //todo to make it look the other project 
+                  */}
                          {/* home icon  */}
                      <div className={`w-full h-14 hover:bg-white group ${router.route === '/' ? 'bg-white' : ''} `} >
                       <Link href={'/'} passHref>
@@ -40,10 +39,10 @@ const Navbar = () => {
                    </Link>
                  </div>
              {/* payment icon  */}
-                 <div className={`w-full h-14 hover:bg-white group ${router.route === '/payment' ? 'bg-white' : ''}`}>
-                  <Link href={'/payment'} passHref>
+                 <div className={`w-full h-14 hover:bg-white group ${router.route === '/calender' ? 'bg-white' : ''}`}>
+                  <Link href={'/calender'} passHref>
                   <a>
-                     <AiOutlineDollarCircle className={`navicon ${router.route === '/payment' ? 'text-black' : 'text-white'}`}/>
+                     <AiOutlineDollarCircle className={`navicon ${router.route === '/calender' ? 'text-black' : 'text-white'}`}/>
                   </a>
                   </Link>
                  </div>

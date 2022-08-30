@@ -14,7 +14,7 @@ function Chart({chartStyle,checked, disabled}) {
   return (
     <>
     <div className={`mx-5 border border-slate-600 rounded xl:w-8/12  xl:mt-20 mb-2  ${chartStyle?.head}`}>
-    <table className={`w-full ${chartStyle.table}`}>
+    <table className={`w-full ${chartStyle?.table}`}>
     <thead className='bg-black text-white border-b border-slate-600'> 
       <tr className=''>
       <th className=''>Operation</th>

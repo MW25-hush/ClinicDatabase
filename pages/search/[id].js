@@ -40,15 +40,17 @@ const Patient = () => {
   }, [router.query.id]);
 
   return (
-    <div className="bg-black h-screen flex overflow-auto relative">
+    <div className="bg-black min-h-screen overflow-auto flex ">
       {/* navbar  */}
+      
       <Navbar />
+
       {/* profile  */}
-      <div className="w-full px pt-3">
+      <div className="pt-3 grow ">
         {/*//* the First header  */}
         <Formik initialValues={{ search: "" }} onSubmit>
           <Form>
-            <div className="flex text-white w-full justify-between px-10">
+            <div className="flex  text-white w-full justify-between px-10 ">
               {/* name and avatar */}
               <div className="flex items-center gap-4">
                 <BsPerson size={35} className="text-slate-400" />
@@ -59,7 +61,7 @@ const Patient = () => {
               </div>
 
               {/*  search  input and add button  */}
-              <div className="flex gap-4 items-center relative p">
+              <div className="flex gap-4 items-center relative">
                 <AiOutlineSearch
                   size={20}
                   className="absolute bottom-2 left-4"
@@ -75,7 +77,7 @@ const Patient = () => {
                 </div>
               </div>
             </div>
-            <hr className="my-4 border-slate-600" />
+            <hr className="my-4 border-slate-600 w-full" />
             {/*  header patient link and update button //*second header  */}
             <div className="flex justify-between px-10">
               {/* patient list and name  */}
@@ -95,10 +97,10 @@ const Patient = () => {
               {/* printer and update button  */}
               <div className="flex gap-4">
                 <div className="bg-slate-400 p-1.5 hover:text-slate-300">
-                  <ImPrinter size={25} className="text-whit" />
+                  <ImPrinter size={25}/>
                 </div>
                 <div className="flex rounded border gap-2 items-center p-1 hover:bg-black">
-                  <BiEdit size={20} className="text-white" />
+                  <BiEdit size={20} className="text-white"/>
                   <span className="text-white">Edit Patient</span>
                 </div>
               </div>
@@ -106,12 +108,12 @@ const Patient = () => {
             <hr className="my-4 border-slate-600 " />
 
             {/* patient profile */}
+            <div className="2xl:max-w-7xl 2xl:mx-auto  ">
             {/* first row  */}
-            <div>
               {/* photo info and observation  */}
-              <div className="flex">
+              <div className="flex md:flex-wrap lg:flex-nowrap ">
                 {/* photo  */}
-                <div className="bg-slate-700 rounded text-center p-10 ml-10 mr-2   ">
+                <div className="bg-slate-700 md:grow lg:grow-0 rounded text-center p-10 ml-10 mr-2 md:order-1 lg:order-none  ">
                   <Image
                     src={data?.sex == "male" ? male : female}
                     alt={data?.name}
@@ -127,7 +129,7 @@ const Patient = () => {
                   <p className="text-gray-500">No Specified email </p>
                 </div>
                 {/* info */}
-                <div className="bg-slate-700 rounded">
+                <div className="bg-slate-700 rounded md:order-3 md:my-5 lg:my-0 md:px-8 lg:px-0  md:mx-auto lg:mx-0 lg:order-none ">
                   {/* first row*/}
                   <div className="flex gap-7 px-10 pt-10 ">
                     <ValueForm
@@ -218,11 +220,11 @@ const Patient = () => {
                   </div>
                 </div>
                 {/* observation  */}
-                <div className="bg-slate-700 rounded ml-4 mr-8  ">
+                <div className="bg-slate-700 rounded ml-4 mr-8 md:order-2 lg:order-none lg:grow ">
                   {/* title */}
                   <p className="text-white pl-4 pt-4 pb-3">Notes</p>
                   {/* container of notes */}
-                  <div className="bg-slate-400 capitalize h-3/5 px-6 mx-4 w-11/12 rounded">
+                  <div className="bg-slate-400 capitalize h-3/5 px-6 mx-4 md:w-11/12 lg:w-10/12 xl:w-11/12 rounded">
                     <ul className="list-disc text-white p-4 ">
                       <li>
                         {data?.observation == ""
@@ -231,7 +233,7 @@ const Patient = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="mt-7 mx-4 flex justify-between">
+                  <div className="my-5 mx-4 xl:flex lg:flex-none md:flex justify-between">
                     {/* name of the doctor  */}
                     <div className="flex items-center gap-2">
                       <BsPerson size={20} className="text-slate-400" />
@@ -242,26 +244,26 @@ const Patient = () => {
                     </div>
 
                     {/* date of entry  */}
-                    <div>
+                    <div className="">
                       {/* //todo Date of registraion to be in here  */}
                       <p className="text-white">Date of Entry</p>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+         
 
             {/* //*chart and files */}
             {/* second row */}
-            <div className="flex mt-5 ml-10">
+            <div className="flex md:flex-wrap lg:flex-nowrap mt-5 ml-10  mr-8">
               {/* operation  */}
-              <div className="bg-slate-700 rounded flex  ">
+              <div className="bg-slate-700 rounded flex grow md:mx-auto lg:mx-0 ">
                 {/* chart container */}
                 <Chart
                   chartStyle={{
-                    body: "even:bg-black",
-                    head: " h-fi !w-96 !border-2 !border-slate-90 !mx-2 !my-12 ",
-                    table: "h-full",
+                    body: "even:bg-black ",
+                    head: "!border-2 !border-slate-90 !mx-2 !my-12 grow ",
+                    table: "h-full  ",
                   }}
                   checked={data?.ops.toString()}
                   disabled={true}
@@ -269,20 +271,20 @@ const Patient = () => {
                 <div className="border-l m-2 border-gray-500 "></div>
                 {/* //? the width and pointer property for the styling of the tooth component accoding to the needs of the page */}
                 <Tooth
-                  toothStyle={"!w-60 pointer-events-none  "}
+                  toothStyle={"!w-64 pointer-events-none"}
                   checked={data?.chart}
                 />
               </div>
 
               {/* Payment  */}
-              <div className="bg-slate-700 ml-2 mr-8  rounded">
+              <div className="bg-slate-700 ml-2 grow rounded md:my-3 lg:my-0  md:mx-5 lg:mx-0 lg:ml-2 ">
                 {/* log of the time of submit will be saved and a complete log of it will be saved  */}
                 {/* title */}
                 <h1 className="text-white text-lg py-5 px-5 font-bold">
                   Payment Section
                 </h1>
                 {/* payment amount total */}
-                <div className="mx-5 bg-slate-400 p-3 rounded  ">
+                <div className="mx-5 mb-7 bg-slate-400 p-4 rounded md:mx-auto lg:mx-5 md:w-9/12 lg:w-11/12">
                   <div>
                   <p className="font-semibold">Total:</p>
                   <p className="border-b-2 border-slate-700 text-slate-800 font-semibold text-lg">
@@ -301,7 +303,6 @@ const Patient = () => {
                   <div className="py-2">
                     <Formik>
                       <Form>
-                        {/* <ValueForm name={'currentPayment'} type="number" label={'Paying Amount'} data="" styling={'!w-72'}/> */}
                         <label htmlFor="currentPayment" className="font-semibold">
                           Paying Amount:
                         </label>
@@ -310,18 +311,23 @@ const Patient = () => {
                           type="number"
                           name="currentPayment"
                           placeholder="Type the amount of payment in here"
-                        />
+                          />
                         <div className="flex justify-between mt-4">
                           <button type="submit" className="bg-black rounded px-7 py-1 text-white hover:bg-mygreen">Save</button>
-                          <button className="border px-2 border-slate-700 rounded hover:bg-slate-700 hover:text-white">Pay Log</button>
+                          {/* button and link to modal that shows complete log of payment history  */}
+                          <button className="border md:border-2 lg:border px-2 border-slate-700 rounded hover:bg-slate-700 hover:text-white">Pay Log</button>
                         </div>
                       </Form>
                     </Formik>
                   </div>
+
                 </div>
-                {/* button and link to modal that shows complete log of payment history  */}
               </div>
+
             </div>
+
+        </div>
+        {/* end of profile  */}
           </Form>
         </Formik>
       </div>
