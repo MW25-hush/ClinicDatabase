@@ -4,7 +4,7 @@ import styles from "../styles/Tooth.module.css";
 function Tooth({handleClickSvg,checked,toothStyle}) {
  
   return (
-    <div className={`${styles.tooth_chart}  md:ml-8 xl:ml-0 ${toothStyle}`}>
+    <div className={`${styles.tooth_chart}  md:ml-8 xl:mx-auto ${toothStyle}`}>
       <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"

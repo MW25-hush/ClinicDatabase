@@ -11,7 +11,7 @@
 
       @layer components {
         .customizeForm{
-          @apply rounded h-10 focus:ring-mygreen focus:border-mygreen focus:border-2  w-full bg-gray-700 text-white
+          @apply rounded h-10 focus:ring-mygreen focus:border-mygreen focus:border-2 w-full bg-gray-700 text-white
         }
         .navicon{
           @apply h-12 w-11 text-white group-hover:text-black mx-auto

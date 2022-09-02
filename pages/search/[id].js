@@ -13,7 +13,7 @@ import Link from "next/link";
 import Image from "next/image";
 import male from "../../public/man.png";
 import female from "../../public/woman.png";
-import ValueForm from "../../components/valueform";
+import ValueForm from "../../components/valueForm";
 import Tooth from "../../components/tooth";
 import Chart from "../../components/Chart";
 
