@@ -1,7 +1,7 @@
-import React from "react";
 import styles from "../styles/Tooth.module.css";
 
 function Tooth({handleClickSvg,checked,toothStyle}) {
+  // console.log(checked);
  
   return (
     <div className={`${styles.tooth_chart}  md:ml-8 xl:mx-auto ${toothStyle}`}>

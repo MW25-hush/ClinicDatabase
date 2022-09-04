@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Navbar from "../components/navbar";
 import Tooth from "../components/tooth";
-import { IoChevronBackOutline } from "react-icons/io5";
 import * as Yup from "yup";
 import { doc, setDoc } from "firebase/firestore";
 import { firestore } from "../firebase/clientApp";
 import Chart from "../components/Chart";
 import FormMaker from "../components/registerFormValue";
+import teeth from '../teethState.json'
 
 // ! This whole page needs refactorization
 
@@ -52,46 +52,8 @@ const validationSchema = Yup.object().shape({
 });
 
 function Register() {
-  // the state for the two links in the page 1 info 2 chart
-  const [active, setActive] = useState({
-    infoActive: true,
-    chartActive: false,
-  });
   //  the state of the teeth
-  const [checked, setChecked] = useState({
-    OneTr: false,
-    TwoTr: false,
-    ThreeTr: false,
-    FourTr: false,
-    FiveTr: false,
-    SixTr: false,
-    SevenTr: false,
-    EightTr: false,
-    OneTl: false,
-    TwoTl: false,
-    ThreeTl: false,
-    FourTl: false,
-    FiveTl: false,
-    SixTl: false,
-    SevenTl: false,
-    EigthTl: false,
-    OneBr: false,
-    TwoBr: false,
-    ThreeBr: false,
-    FourBr: false,
-    FiveBr: false,
-    SixBr: false,
-    SevenBr: false,
-    EightBr: false,
-    OneBl: false,
-    TwoBl: false,
-    ThreeBl: false,
-    FourBl: false,
-    FiveBl: false,
-    SixBl: false,
-    SevenBl: false,
-    EightBl: false,
-  });
+  const [checked, setChecked] = useState(teeth);
 
   const handleClickSvg = (data) => {
     let temp = data.target.id;
@@ -121,7 +83,7 @@ function Register() {
       chart: checked,
     })
       // todo to find the response property out of the firestore
-      .then((res) => console.log(res));
+      .then((res) => res == undefined ? resetForm() : null);
   };
 
   return (
