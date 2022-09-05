@@ -1,11 +1,16 @@
 import { Field } from 'formik'
-import React from 'react'
 
-const ValueForm = ({label, name, type, data, styling ,disabled}) => {
+const ValueForm = ({label, name, type, data, styling ,disabled, nameValueChanger}) => {
+  const handleChange = e => {
+          nameValueChanger(prev => ({
+            ...prev,
+            [name] : e.target.value
+          }))    
+    }
   return (
     <div>
     <label htmlFor={name} className="text-gray-400 ">{label}</label>
-    <Field type={type} className={`customValueForm  ${styling}`}value={data} name={name} disabled={disabled}/>
+    <Field type={type} className={`customValueForm  ${styling}`} value={data ?? ''} name={name} disabled={disabled} onChange={handleChange}/>
    </div>
   )
 }

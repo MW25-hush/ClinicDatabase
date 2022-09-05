@@ -83,7 +83,7 @@ function Register() {
       chart: checked,
     })
       // todo to find the response property out of the firestore
-      .then((res) => res == undefined ? resetForm() : null);
+      .then((res) => resetForm());
   };
 
   return (

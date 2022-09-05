@@ -399,32 +399,32 @@ function Tooth({handleClickSvg,checked,toothStyle}) {
           onClick={handleClickSvg}
           />
           <polygon
-            id="OneTr"
-            fill={checked?.OneTr ? "#029F08" : "#475569"}
+            id="EightTr"
+            fill={checked?.EightTr ? "#029F08" : "#475569"}
             data-key="16"
             points="404.3,293.7 408.7,299.3 408.7,308 405.3,318.7 401,329.7 392.3,339.7 382.7,341 
           369,339.7 359,335 354.7,327.7 354.3,316 358.3,304 363.7,294 368.7,294.7 378.7,296 389,296 	"
           onClick={handleClickSvg}
           />
           <polygon
-            id="TwoTr"
-            fill={checked?.TwoTr ? "#029F08" : "#475569"}
+            id="SevenTr"
+            fill={checked?.SevenTr ? "#029F08" : "#475569"}
             data-key="15"
             points="362.3,247.3 357.3,251 357,259.3 358.7,268 359.7,279.7 361.3,286.7 365,291.7 
           371,294.3 392,295 404.3,293.7 410,280.7 412,263.3 407.3,246.7 401,240.3 396,239.7 389.3,243 	"
           onClick={handleClickSvg}
           />
           <polygon
-            id="ThreeTr"
-            fill={checked?.ThreeTr ? "#029F08" : "#475569"}
+            id="Sixr"
+            fill={checked?.SixTr ? "#029F08" : "#475569"}
             data-key="14"
             points="359.7,243.7 350.7,224 345.7,211.7 348.7,205 358.3,202.7 375.7,197 388.7,193 
           393,196 399.3,207 401.3,222.7 400,234.3 394.7,240.7 381.7,244.7 371,246 	"
           onClick={handleClickSvg}
           />
           <polygon
-            id="FourTr"
-            fill={checked?.FourTr ? "#029F08" : "#475569"}
+            id="FiveTr"
+            fill={checked?.FiveTr ? "#029F08" : "#475569"}
             data-key="13"
             points="386,188.7 383.3,192.7 377.7,196 356.3,203.3 345.7,202.3 341.7,199.7 338.7,196.3 
           335,188.7 332,177 333.7,169.7 338,164.7 346.3,161 353.7,156.7 360.3,150.3 364,151 370.7,156.3 376.3,164.3 380,170.3 
@@ -432,8 +432,8 @@ function Tooth({handleClickSvg,checked,toothStyle}) {
           onClick={handleClickSvg}
           />
           <polygon
-            id="FiveTr"
-            fill={checked?.FiveTr ? "#029F08" : "#475569"}
+            id="FourTr"
+            fill={checked?.FourTr ? "#029F08" : "#475569"}
             data-key="12"
             points="358.7,134.3 360.3,145.7 357.3,152.7 352,157.3 346.3,161 336,164 329.7,163.3 
           321.7,157.7 314.3,149 310.7,139.3 310,133.7 312.3,127 318.3,125.7 326,122 332.7,116 334.7,114.3 337.7,117.3 343.3,119.7 
@@ -441,24 +441,24 @@ function Tooth({handleClickSvg,checked,toothStyle}) {
           onClick={handleClickSvg}
           />
           <polygon
-            id="SixTr"
-            fill={checked?.SixTr ? "#029F08" : "#475569"}
+            id="ThreeTr"
+            fill={checked?.ThreeTr ? "#029F08" : "#475569"}
             data-key="11"
             points="336,93.3 337.7,100 336,104.7 332.7,113.7 324.3,121.3 315.3,125.7 306.3,126 
           297.3,120.3 294,112 295.7,102.7 299,95 303.3,90 309.3,88 316.3,87.3 322.7,87.3 328,88.3 	"
           onClick={handleClickSvg}
           />
           <polygon
-            id="SevenTr"
-            fill={checked?.SevenTr ? "#029F08" : "#475569"}
+            id="TwoTr"
+            fill={checked?.TwoTr ? "#029F08" : "#475569"}
             data-key="10"
             points="310.3,83.3 298,90.7 286,95 276.3,98.3 270.3,93.3 269,82.7 269,69.3 270,58.7 
           274.7,54.7 282,53 287.7,54.7 297.3,60.3 304,64.3 308.7,68.7 312.3,74 313,81 	"
           onClick={handleClickSvg}
           />
           <polygon
-            id="EightTr"
-            fill={checked?.EightTr ? "#029F08" : "#475569"}
+            id="OneTr"
+            fill={checked?.OneTr ? "#029F08" : "#475569"}
             data-key="9"
             points="273.3,52 266.7,61.7 258.3,72.3 253.3,79.7 247.3,85 239,87.7 232.3,82 224.7,67 
           222,58.3 219,50 220,44.3 224.3,40.3 230,38.7 237.3,38.7 253,39.3 258.7,41.3 264.3,43.7 268.3,45.7 	"

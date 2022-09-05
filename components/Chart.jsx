@@ -10,9 +10,8 @@ const operations = [
 ];
 
 
-function Chart({chartStyle,checked, disabled, onChange, editCheck}) {
-  // console.log(checked);
-  // console.log(editCheck);
+function Chart({chartStyle,checked, disabled, props}) {
+   
 
   return (
     <>
@@ -36,9 +35,9 @@ function Chart({chartStyle,checked, disabled, onChange, editCheck}) {
                       className="check rounded border-slate-600 w-5 h-5 "
                       type="checkbox"
                       value={op.value}
-                      checked={disabled ? checked?.includes(op.value) : editCheck?.includes(op.value) }
+                      checked={ checked?.includes(op.value) }
                       disabled={disabled}
-                      onChange={onChange}
+                      {...props}
                       />
                     </td>
                   </tr>
@@ -53,5 +52,3 @@ function Chart({chartStyle,checked, disabled, onChange, editCheck}) {
 }
 
 export default Chart
-
-// todo add payment info 

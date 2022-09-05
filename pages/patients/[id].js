@@ -1,4 +1,4 @@
-import { doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Navbar from "../../components/navbar";
@@ -30,6 +30,12 @@ const Patient = () => {
     search: "",
     ops: [],
     chart: {},
+    name : '',
+    last_name : '',
+    phone_number: 0,
+    address : '',
+    payment_amount : 0
+
   });
 
   useEffect(() => {
@@ -43,10 +49,12 @@ const Patient = () => {
             ...initialValues,
             ops: docSnap.data().ops,
             chart: docSnap.data().chart,
+            name : docSnap.data().name,
+            last_name : docSnap.data().last_name,
+            address : docSnap.data().address,
+            payment_amount : docSnap.data().payment_amount
           });
-          //  console.log("Document data:", docSnap.data());
         } else {
-          // doc.data() will be undefined in this case
           setData(undefined);
         }
       }
@@ -55,10 +63,17 @@ const Patient = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.id]);
 
-  //* handle update function
-  const handleUpdate = (condition) => {
-    if (condition === "status") setEditStatus(!editActive);
-  };
+  // handleDelete Function
+  const handleDelete = () => {
+    (async function() {
+          await deleteDoc(doc(firestore, 'user', router.query.id))
+          .then(() => {
+            setEditStatus(false)
+            router.push('/patients')
+          })
+    })();
+  }
+
 
   //* handle svg function
   const handleClickSvg = (e) => {
@@ -69,6 +84,26 @@ const Patient = () => {
         [e.target.id]: !comp.chart[e.target.id],
       },
     }));
+  };
+
+     //* handle update function
+  const handleUpdate = (condition) => {
+    if (condition === "status") setEditStatus(!editActive);
+    if(condition === 'update') {
+      (async function () {
+           await setDoc(doc(firestore, 'user', router.query.id),{
+                ...data , 
+                name : initialValues.name,
+                last_name : initialValues.last_name,
+                address : initialValues.address,
+                payment_amount  : initialValues.payment_amount,
+                ops: initialValues.ops,
+                chart : initialValues.chart
+           }).then(() => 
+            setEditStatus(false)
+           )
+      })();
+    }
   };
 
   const handleChange = (e) => {
@@ -93,7 +128,7 @@ const Patient = () => {
       {/* profile  */}
       <div className="pt-3 grow ">
         {/*//* the First header  */}
-        <Formik initialValues={initialValues} onSubmit>
+        <Formik initialValues={initialValues}>
           <Form>
             <div className="flex  text-white w-full justify-between px-10 ">
               {/* name and avatar */}
@@ -101,6 +136,7 @@ const Patient = () => {
                 <BsPerson size={35} className="text-slate-400" />
                 <span className="text-lg ">
                   {data?.name}
+                  &nbsp;
                   {data?.last_name}
                 </span>
               </div>
@@ -135,6 +171,7 @@ const Patient = () => {
                 <MdArrowForwardIos className="text-slate-600" size={25} />
                 <span className="text-slate-400">
                   {data?.name}
+                  &nbsp;
                   {data?.last_name}
                 </span>
               </div>
@@ -187,6 +224,7 @@ const Patient = () => {
                   <button
                     type="button"
                     className="rounded flex bg-red-500 text-white items-center px-2 py-1 gap-1 hover:bg-red-900 "
+                    onClick={handleDelete}
                   >
                     <AiOutlineUserDelete />
                     <span>Delete Patient</span>
@@ -217,6 +255,7 @@ const Patient = () => {
                     } text-lg font-semibold text-white`}
                   >
                     {data?.name}
+                    &nbsp;
                     {data?.last_name}
                   </p>
 
@@ -228,16 +267,18 @@ const Patient = () => {
                     <ValueForm
                       name="name"
                       type="text"
-                      data={data?.name}
+                      data={editActive ? initialValues.name : data?.name}
                       label="Name"
                       disabled={!editActive}
+                      nameValueChanger={setInitialValues}
                     />
                     <ValueForm
                       name="last_name"
                       type="text"
-                      data={data?.last_name}
+                      data={editActive ? initialValues.last_name : data?.last_name}
                       label="Last Name"
                       disabled={!editActive}
+                      nameValueChanger={setInitialValues}
                     />
                   </div>
                   <p className="text-gray-500">No Specified email </p>
@@ -265,7 +306,7 @@ const Patient = () => {
                       type="number"
                       data={data?.phone_number}
                       label="Phone"
-                      disabled={!editActive}
+                      disabled={true}
                     />
                   </div>
 
@@ -277,6 +318,7 @@ const Patient = () => {
                       data={data?.address}
                       label="Address"
                       disabled={!editActive}
+                      nameValueChanger={setInitialValues}
                     />
                     <ValueForm
                       name="job"
@@ -289,8 +331,10 @@ const Patient = () => {
                     <ValueForm
                       name="payment_amount"
                       type="number"
-                      data={data?.payment_amount}
+                      data={editActive ? initialValues.payment_amount : data?.payment_amount}
                       label="Payment Amount"
+                      disabled={!editActive}
+                      nameValueChanger={setInitialValues}
                     />
                   </div>
 
@@ -390,17 +434,16 @@ const Patient = () => {
                       head: "!border-2 !border-slate-90 !mx-2 !my-12 grow ",
                       table: "h-full  ",
                     }}
-                    checked={data?.ops}
-                    editCheck={initialValues?.ops}
+                    checked={editActive ? initialValues.ops :data?.ops}
                     disabled={!editActive}
-                    onChange={handleChange}
+                      props ={{onChange : handleChange}}
                   />
                   <div className="border-l m-2 border-gray-500 "></div>
                   {/* //? the width and pointer property for the styling of the tooth component accoding to the needs of the page */}
                   <Tooth
                     toothStyle={`!w-64 ${
                       editActive ? "pointer-events-auto" : "pointer-events-none"
-                    } `}
+                    }`}
                     handleClickSvg={handleClickSvg}
                     checked={editActive ? initialValues?.chart : data?.chart}
                   />

@@ -1,19 +1,32 @@
-  import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
   import { Formik } from "formik";
   import Link from "next/link";
-  import { useState } from "react";
+  import { useEffect, useState } from "react";
   import { AiOutlineSearch } from "react-icons/ai";
   import Navbar from "../../components/navbar";
   import { firestore } from "../../firebase/clientApp";
 
-function Search({ patientsList }) {
-  // console.log(patientsList);
+    //! can realtime database be used with the getstaticprops or with getServersideProps  
 
+function Search() {
+    const [patientsList, setPatientsList] = useState([])
     const [activePartition,setActivePartition] = useState(false)
     const [filtered,setFiltered] = useState([])
+
+    useEffect(() => {
+      onSnapshot(collection(firestore, 'user'),snapshot => {
+        //  if(snapshot.metadata.hasPendingWrites) 
+         snapshot.docs.map(doc => {
+            setPatientsList(current =>  [...current, {...doc.data() , id: doc.id}])
+          })
+      })
+    },[])
+
+    console.log(patientsList);
+
     // todo filter the content in here 
   const handleChange  =  (e) => {
-    // check for string length and then display accodingly
+    // check for string length and then display accordingly
     e.target.value.length > 0 ? setActivePartition(true) : setActivePartition(false) 
     
     // filter function
@@ -24,7 +37,6 @@ function Search({ patientsList }) {
     }))
     
   };
-  // console.log(filtered, 'out of the function');
 
 
   return (
@@ -72,8 +84,8 @@ function Search({ patientsList }) {
                   {/* //* All the patients List  */}
                     <tbody className={`${activePartition ? 'hidden' : ''}`}>
                         {patientsList?.map((patient,idx) => (
-                          <Link key={patient.phone_number} href={`/search/${patient.phone_number}`} passHref>
-                           <tr className="text-center hover:bg-mygreen transition" >
+                          <Link key={patient.phone_number} href={`/patients/${patient.phone_number}`} passHref>
+                           <tr className="text-center hover:bg-mygreen transition cursor-pointer" >
                               <td>{idx + 1}</td>
                               <td>{patient.phone_number}</td>
                               <td>{patient.name}</td>
@@ -116,25 +128,9 @@ function Search({ patientsList }) {
       </div>
     </div>
   );
-}
+                          }
 
-export default Search;
+  export default Search
 
 // todo may be the static function is not approparitate  try the serverside props or render it on the client side 
 
-    export async function getStaticProps() {
-      const patientsCollection = collection(firestore, "user");
-      let patientsList = [];
-      await getDocs(patientsCollection).then((snapshot) => {
-        snapshot.forEach((doc) => {
-          patientsList.push({ ...doc.data(), id: doc.id });
-        });
-      });
-
-      return {
-        props: {
-          patientsList,
-        },
-        
-      };
-    }
