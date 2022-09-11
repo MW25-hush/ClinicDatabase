@@ -1,4 +1,4 @@
-import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Navbar from "../../components/navbar";
@@ -11,6 +11,7 @@ import {
   AiOutlineUserDelete,
   AiFillSave,
 } from "react-icons/ai";
+import { FaHistory } from "react-icons/fa";
 import { MdArrowForwardIos, MdCancel } from "react-icons/md";
 import { ImPrinter } from "react-icons/im";
 import { BiEdit } from "react-icons/bi";
@@ -21,6 +22,7 @@ import female from "../../public/woman.png";
 import ValueForm from "../../components/valueForm";
 import Tooth from "../../components/tooth";
 import Chart from "../../components/Chart";
+import { toast, ToastContainer } from "react-toastify";
 
 const Patient = () => {
   const router = useRouter();
@@ -30,50 +32,62 @@ const Patient = () => {
     search: "",
     ops: [],
     chart: {},
-    name : '',
-    last_name : '',
+    name: "",
+    last_name: "",
     phone_number: 0,
-    address : '',
-    payment_amount : 0
-
+    address: "",
+    payment_amount: 0,
+    currentPayment: 0,
   });
 
   useEffect(() => {
-    async function fetch() {
-      if (router.query.id) {
-        const docRef = doc(firestore, "user", router.query.id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setData(docSnap.data());
-          setInitialValues({
-            ...initialValues,
-            ops: docSnap.data().ops,
-            chart: docSnap.data().chart,
-            name : docSnap.data().name,
-            last_name : docSnap.data().last_name,
-            address : docSnap.data().address,
-            payment_amount : docSnap.data().payment_amount
-          });
-        } else {
-          setData(undefined);
-        }
+    // * GetDoc function for fetching the data from firestore
+    if (router.query.id) {
+      const docRef = doc(firestore, "user", router.query.id);
+        // fetching data from the firestore for single document
+      try {
+        onSnapshot(docRef, (snapshot) => {
+          if (snapshot.exists()) {
+            // fetching data for the Main profile Data
+            setData(snapshot.data());
+            // Fetching the same data for the updateState to be modified
+            setInitialValues({
+              ...initialValues,
+              ops: snapshot.data().ops,
+              chart: snapshot.data().chart,
+              name: snapshot.data().name,
+              last_name: snapshot.data().last_name,
+              address: snapshot.data().address,
+              payment_amount: snapshot.data().payment_amount,
+            });
+          } else {
+                // todo show the that the document is not defined
+          }
+        });
+      } catch (e) {
+          toast.error(e.message)
       }
     }
-    fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query.id]);
+    //! not sure on error handling on this block
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps 
+  });
 
   // handleDelete Function
   const handleDelete = () => {
-    (async function() {
-          await deleteDoc(doc(firestore, 'user', router.query.id))
-          .then(() => {
-            setEditStatus(false)
-            router.push('/patients')
-          })
+    //* deleteDoc function
+    (async function () {
+      await deleteDoc(doc(firestore, "user", router.query.id))
+        .then(() => {
+          toast.info("successfully deleted");
+          setEditStatus(false);
+          router.push("/patients");
+        })
+        .catch((e) => {
+          toast.error(e.message);
+        });
     })();
-  }
-
+  };
 
   //* handle svg function
   const handleClickSvg = (e) => {
@@ -86,22 +100,23 @@ const Patient = () => {
     }));
   };
 
-     //* handle update function
+  //* handle update function
   const handleUpdate = (condition) => {
     if (condition === "status") setEditStatus(!editActive);
-    if(condition === 'update') {
+    if (condition === "update") {
       (async function () {
-           await setDoc(doc(firestore, 'user', router.query.id),{
-                ...data , 
-                name : initialValues.name,
-                last_name : initialValues.last_name,
-                address : initialValues.address,
-                payment_amount  : initialValues.payment_amount,
-                ops: initialValues.ops,
-                chart : initialValues.chart
-           }).then(() => 
-            setEditStatus(false)
-           )
+        await setDoc(doc(firestore, "user", router.query.id), {
+          ...data,
+          name: initialValues.name,
+          last_name: initialValues.last_name,
+          address: initialValues.address,
+          ops: initialValues.ops,
+          chart: initialValues.chart,
+        })
+          .then(() => setEditStatus(false))
+          .catch((e) => {
+            toast.error(e.message);
+          });
       })();
     }
   };
@@ -116,11 +131,33 @@ const Patient = () => {
       initialValues?.ops.push(e.target.value);
       setInitialValues({ ...initialValues, ops: initialValues.ops });
     }
-    // console.log(initialValues.ops)
   };
+
+  // * handlePay Function
+  const handlePay = () => {
+    (async function () {
+      await setDoc(doc(firestore, "user", router.query.id), {
+        ...data,
+        // todo to add history log here
+        recieved_payment: data.recieved_payment
+          ? parseInt(data?.recieved_payment + initialValues.currentPayment)
+          : initialValues.currentPayment,
+      })
+        .then(() => {
+          // react toastify in here
+          toast.success("Successfully Payed");
+          setInitialValues({ ...initialValues, currentPayment: 0 });
+        })
+        .catch((e) => {
+          toast.error(e.message);
+        });
+    })();
+  };
+
   if (data == undefined) return <h1>Loading</h1>;
   return (
     <div className="bg-black min-h-screen overflow-auto flex ">
+      <ToastContainer />
       {/* navbar  */}
 
       <Navbar />
@@ -275,7 +312,9 @@ const Patient = () => {
                     <ValueForm
                       name="last_name"
                       type="text"
-                      data={editActive ? initialValues.last_name : data?.last_name}
+                      data={
+                        editActive ? initialValues.last_name : data?.last_name
+                      }
                       label="Last Name"
                       disabled={!editActive}
                       nameValueChanger={setInitialValues}
@@ -331,7 +370,11 @@ const Patient = () => {
                     <ValueForm
                       name="payment_amount"
                       type="number"
-                      data={editActive ? initialValues.payment_amount : data?.payment_amount}
+                      data={
+                        editActive
+                          ? initialValues.payment_amount
+                          : data?.payment_amount
+                      }
                       label="Payment Amount"
                       disabled={!editActive}
                       nameValueChanger={setInitialValues}
@@ -434,9 +477,9 @@ const Patient = () => {
                       head: "!border-2 !border-slate-90 !mx-2 !my-12 grow ",
                       table: "h-full  ",
                     }}
-                    checked={editActive ? initialValues.ops :data?.ops}
+                    checked={editActive ? initialValues.ops : data?.ops}
                     disabled={!editActive}
-                      props ={{onChange : handleChange}}
+                    props={{ onChange: handleChange }}
                   />
                   <div className="border-l m-2 border-gray-500 "></div>
                   {/* //? the width and pointer property for the styling of the tooth component accoding to the needs of the page */}
@@ -453,56 +496,105 @@ const Patient = () => {
                 <div
                   className={`${
                     editActive ? "opacity-60" : "opacity-100"
-                  } bg-slate-700 ml-2 grow rounded md:my-3 lg:my-0  md:mx-5 lg:mx-0 lg:ml-2 opacity-60`}
+                  } bg-slate-700 ml-2 grow lg:grow-0 xl:gro rounded md:my-3 lg:my-0  md:mx-5 lg:mx-0 lg:ml-2 `}
                 >
                   {/* log of the time of submit will be saved and a complete log of it will be saved  */}
-                  {/* title */}
-                  <h1 className="text-white text-lg py-5 px-5 font-bold">
-                    Payment Section
-                  </h1>
+                  {/* title and edit icon*/}
+                  <div className="flex items-center justify-between px-5 py-2">
+                    {/* title */}
+                    <h1 className="text-white text-lg font-bold">
+                      Payment Section
+                    </h1>
+                    <BiEdit
+                      size={25}
+                      className="text-white mr-5 hover:text-gray-400"
+                    />
+                  </div>
                   {/* payment amount total */}
-                  <div className="mx-5 mb-7 bg-slate-400 p-4 rounded md:mx-auto lg:mx-5 md:w-9/12 lg:w-11/12">
-                    <div>
-                      <p className="font-semibold">Total:</p>
-                      <p className="border-b-2 border-slate-700 text-slate-800 font-semibold text-lg">
-                        &nbsp; {data?.payment_amount} Afs
-                      </p>
-                    </div>
+                  <div
+                    id="billingContainer"
+                    className="mx-3 flex items-center lg:h-5/6 rounded md:p-5 lg:p-0"
+                  >
+                    {/* billing intel section */}
+                    <div className=" space-y-2">
+                      <div>
+                        <label className="text-gray-400 font-bold block">
+                          Total Amount:
+                        </label>
+                        <Field
+                          type="number"
+                          name="payment_amount"
+                          className={`${
+                            editActive ? "inline-block" : "hidden"
+                          } border-0 bg-inherit text-white font-semibold text-lg`}
+                          value={data?.payment_amount}
+                        />
+                        <p className="text-white text-lg font-bold">
+                          &nbsp;{data?.payment_amount}{" "}
+                          <span className="text-md font-semibold">Afs</span>
+                        </p>
+                      </div>
 
-                    <div>
-                      <p className=" font-semibold">Recieved Amount:</p>
-                      {/* //todo this part needs data and calcuation from the total and payed amount */}
-                      <p className="border-b-2 border-slate-700 text-slate-800 font-semibold text-lg">
-                        &nbsp; {data?.payment_amount} Afs
-                      </p>
+                      <div>
+                        <p className="font-bold text-gray-400">
+                          Recieved Amount:
+                        </p>
+                        {/* //todo this part needs data and calcuation from the total and payed amount */}
+                        <p className="text-white font-semibold text-lg">
+                          &nbsp;{data?.recieved_payment || 0} Afs
+                        </p>
+                      </div>
+
+                      <div className="">
+                        <p className="text-gray-400 font-bold text-lg">
+                          Remaining Amount:
+                        </p>
+                        {/* //todo to be caculated from 2 endpoints  */}
+                        <p className="text-white font-semibold">
+                          &nbsp;
+                          {data?.payment_amount - data?.recieved_payment ||
+                            data?.payment_amount}{" "}
+                          <span className="text-md font-semibold">Afs</span>
+                        </p>
+                      </div>
                     </div>
                     {/* paying amount */}
-                    <div className="py-2">
-                      <label htmlFor="currentPayment" className="font-semibold">
-                        Paying Amount:
-                      </label>
-                      <Field
-                        className="border-b-2 bg-slate-400 border-0 border-slate-700 w-full p-0 focus:border-0 focus:ring-0 focus:border-b-4 focus:border-black placeholder:text-sm placeholder:italic"
-                        type="number"
-                        name="currentPayment"
-                        placeholder="Type the amount of payment in here"
-                        disabled={editActive}
-                      />
-                      <div className="flex justify-between mt-4">
-                        <button
-                          type="submit"
-                          className="bg-black rounded px-7 py-1 text-white hover:bg-mygreen"
-                          disabled={editActive}
-                        >
-                          Save
-                        </button>
+                    <div className="py-2 bg-slate-400 rounded grow md:mx-10">
+                      {/* billing tilte  and history log */}
+                      <div className=" flex items-center justify-between mx-5 ">
+                        <h1 className="font-bold text-lg ">Billing Section</h1>
                         {/* button and link to modal that shows complete log of payment history  */}
+                        <FaHistory />
+                      </div>
+
+                      <div className="mx-5 mt-2 mb-4">
+                        <label
+                          htmlFor="currentPayment"
+                          className="font-semibold block"
+                        >
+                          Paying Amount:
+                        </label>
+                        <input
+                          className="bg-slate-400 w-full customValueForm focus:border-black focus:border-b-4"
+                          type="number"
+                          disabled={editActive}
+                          onChange={(e) =>
+                            setInitialValues({
+                              ...initialValues,
+                              currentPayment: parseInt(e.target.value),
+                            })
+                          }
+                        />
+                      </div>
+
+                      <div className="mx-5">
                         <button
                           type="button"
-                          className="border md:border-2 lg:border px-2 border-slate-700 rounded hover:bg-slate-700 hover:text-white"
+                          className="bg-black rounded px-7 py-1 w-full font-bold  text-white hover:bg-gray-600 "
                           disabled={editActive}
-                       >
-                          Pay Log
+                          onClick={handlePay}
+                        >
+                          Recieve
                         </button>
                       </div>
                     </div>

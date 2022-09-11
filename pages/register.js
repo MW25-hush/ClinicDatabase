@@ -303,10 +303,10 @@ function Register() {
 
             {/*//* Table of operation and Teeth  */}
             <div
-              className={`flex items-center  bg-slate-800 md:max-w-2xl lg:max-w-none mx-auto lg:mt-8 lg:flex-wrap xl:grow xl:block lg:mx-2 lg:bg-black  lg:space-y-6`}
+              className={`flex items-center bg-slate-800 md:max-w-2xl lg:max-w-none mx-auto lg:mt-8 lg:flex-wrap xl:grow xl:block lg:mx-2 lg:bg-black  lg:space-y-6`}
             >
               {/* table  */}
-              <div className="grow xl:max-w-lg ">
+              <div className="grow xl:max-w-lg">
                 <Chart
                   chartStyle={{
                     body: "",
@@ -319,7 +319,7 @@ function Register() {
               <span className="border-r border-gray-400 h-64 lg:hidden"></span>
               {/* Tooth chart SVG */}
               <div className="lg:bg-slate-800 lg:rounded xl:max-w-sm ">
-                <h1 className="text-white p-2 font-semibold text-center capitalize ">
+                <h1 className="text-white p-2 font-semibold text-center capitalize">
                   Hightlight the Teeth needing treatment{" "}
                 </h1>
                 <Tooth

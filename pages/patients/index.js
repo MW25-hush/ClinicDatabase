@@ -3,6 +3,7 @@ import { collection, onSnapshot } from "firebase/firestore";
   import Link from "next/link";
   import { useEffect, useState } from "react";
   import { AiOutlineSearch } from "react-icons/ai";
+import { toast } from "react-toastify";
   import Navbar from "../../components/navbar";
   import { firestore } from "../../firebase/clientApp";
 
@@ -14,17 +15,23 @@ function Search() {
     const [filtered,setFiltered] = useState([])
 
     useEffect(() => {
+      // ? for avoiding the duplication in the array as it will give React Class Error
+      setPatientsList([])
+      try{
       onSnapshot(collection(firestore, 'user'),snapshot => {
         //  if(snapshot.metadata.hasPendingWrites) 
          snapshot.docs.map(doc => {
             setPatientsList(current =>  [...current, {...doc.data() , id: doc.id}])
           })
       })
-    },[])
+    } catch(e){
+      // may be to use modal in here 
+      toast.error(e.message)  
+    }
+  },[])
 
-    console.log(patientsList);
 
-    // todo filter the content in here 
+    //? filter the content in here 
   const handleChange  =  (e) => {
     // check for string length and then display accordingly
     e.target.value.length > 0 ? setActivePartition(true) : setActivePartition(false) 
@@ -40,6 +47,7 @@ function Search() {
 
 
   return (
+    
     <div className="bg-black h-screen flex">
       {/* navbar */}
       <Navbar />
