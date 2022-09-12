@@ -78,7 +78,6 @@ function Tooth({handleClickSvg,checked,toothStyle}) {
             fontFamily="'Avenir-Heavy'"
             fontSize="18px"
           >
-            1
           </text>
           <text
             id="lbl24"
@@ -415,7 +414,7 @@ function Tooth({handleClickSvg,checked,toothStyle}) {
           onClick={handleClickSvg}
           />
           <polygon
-            id="Sixr"
+            id="SixTr"
             fill={checked?.SixTr ? "#029F08" : "#475569"}
             data-key="14"
             points="359.7,243.7 350.7,224 345.7,211.7 348.7,205 358.3,202.7 375.7,197 388.7,193 

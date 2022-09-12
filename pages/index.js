@@ -2,7 +2,8 @@ import Navbar from '../components/navbar';
 
 
  function Home() { 
- return (
+
+  return (
     <div className='flex bg-black overflow-auto h-screen '>
       {/* //* Navbar */}
          <Navbar />

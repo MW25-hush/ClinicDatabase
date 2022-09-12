@@ -25,6 +25,8 @@ import Chart from "../../components/Chart";
 import { toast, ToastContainer } from "react-toastify";
 
 const Patient = () => {
+  // console.log(Date().tolocaleString('us'));
+
   const router = useRouter();
   const [data, setData] = useState();
   const [editActive, setEditStatus] = useState(false);
@@ -34,7 +36,6 @@ const Patient = () => {
     chart: {},
     name: "",
     last_name: "",
-    phone_number: 0,
     address: "",
     payment_amount: 0,
     currentPayment: 0,
@@ -44,7 +45,7 @@ const Patient = () => {
     // * GetDoc function for fetching the data from firestore
     if (router.query.id) {
       const docRef = doc(firestore, "user", router.query.id);
-        // fetching data from the firestore for single document
+      // fetching data from the firestore for single document
       try {
         onSnapshot(docRef, (snapshot) => {
           if (snapshot.exists()) {
@@ -61,17 +62,20 @@ const Patient = () => {
               payment_amount: snapshot.data().payment_amount,
             });
           } else {
-                // todo show the that the document is not defined
+            // todo show the that the document is not defined
           }
         });
       } catch (e) {
-          toast.error(e.message)
+        toast.error(e.message);
       }
     }
     //! not sure on error handling on this block
+    // return () => {
+    //   setData([])
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.query.id]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps 
-  });
 
   // handleDelete Function
   const handleDelete = () => {
@@ -200,7 +204,7 @@ const Patient = () => {
             <div className="flex justify-between px-10">
               {/* patient list and name  */}
               <div className="mt-2 flex gap-3 items-center">
-                <Link href={"/search"} passHref>
+                <Link href={"/patients"} passHref>
                   <span className="text-white cursor-pointer hover:text-gray-400">
                     Patient List
                   </span>
@@ -366,18 +370,13 @@ const Patient = () => {
                       label="Job"
                       disabled={true}
                     />
-                    {/* //todo to add the registration data and show it here  */}
+                    {/* //todo make the fields not for edit a non field element */}
                     <ValueForm
-                      name="payment_amount"
-                      type="number"
-                      data={
-                        editActive
-                          ? initialValues.payment_amount
-                          : data?.payment_amount
-                      }
-                      label="Payment Amount"
-                      disabled={!editActive}
-                      nameValueChanger={setInitialValues}
+                      name="createdAt"
+                      type="text"
+                      data={data?.registeredAt}
+                      label="Registry Date"
+                      disabled={true}
                     />
                   </div>
 
@@ -446,7 +445,7 @@ const Patient = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="my-5 mx-4 xl:flex lg:flex-none md:flex justify-between">
+                  <div className="my-5 mx-4 flex lg:justify-between ">
                     {/* name of the doctor  */}
                     <div className="flex items-center gap-2">
                       <BsPerson size={20} className="text-slate-400" />
@@ -457,9 +456,9 @@ const Patient = () => {
                     </div>
 
                     {/* date of entry  */}
-                    <div className="">
+                    <div className="hidden lg:block">
                       {/* //todo Date of registraion to be in here  */}
-                      <p className="text-white">Date of Entry</p>
+                      <p className="text-white">{data?.registeredAt}</p>
                     </div>
                   </div>
                 </div>

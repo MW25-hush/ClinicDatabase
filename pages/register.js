@@ -54,6 +54,7 @@ const validationSchema = Yup.object().shape({
 function Register() {
   //  the state of the teeth
   const [checked, setChecked] = useState(teeth);
+  // const date = new Date().toLocaleDateString('fa-IR-u-nu-latn')
 
   const handleClickSvg = (data) => {
     let temp = data.target.id;
@@ -81,6 +82,7 @@ function Register() {
       observation: values.observation,
       ops: values.ops,
       chart: checked,
+      // registeredAt : date
     })
       // todo to find the response property out of the firestore
       .then((res) => resetForm());
