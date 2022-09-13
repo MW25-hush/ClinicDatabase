@@ -1,21 +1,15 @@
 import { ErrorMessage, Field } from 'formik';
-
-const operations = [
-  {label : 'Tooth Filling', value : 'toothfilling' , name : 'ops'  },
-  {label : 'Orthodantic', value : 'orthodancy' , name : 'ops'  },
-  {label : 'Implant', value : 'implant', name : 'ops'  },
-  {label : 'Crown', value : 'crown' , name : 'ops' },
-  {label : 'Bleaching', value : 'bleaching' , name : 'ops'  },
-  {label : 'Prosthesis', value : 'prosthesis' , name : 'ops' },
-];
+import json from '../DataObjects.json'
 
 
-function Chart({chartStyle,checked, disabled, props}) {
+function OperationOptionsTable({chartStyle,checked, disabled, props}) {
+  // table of operations 
+  const listOfOperations = json.Operations
    
 
   return (
     <>
-    <div className={`mx-5 border border-slate-600 rounded xl:w-8/12  xl:mt-20 mb-2 ${chartStyle?.head}`}>
+    <div className={`mx-5 border border-slate-600 rounded max-w-sm  mb-2 ${chartStyle?.head}`}>
     <table className={`w-full ${chartStyle?.table}`}>
     <thead className='bg-black text-white border-b border-slate-600'> 
       <tr>
@@ -24,7 +18,7 @@ function Chart({chartStyle,checked, disabled, props}) {
       </tr>
     </thead>
         <tbody className='text-white'>
-        {operations.map((op) => (
+        {listOfOperations.map((op) => (
                 <tr key={op.label} className={chartStyle?.body}>
                   <td className="pl-2">
                     <span>{op.label}</span>
@@ -51,4 +45,4 @@ function Chart({chartStyle,checked, disabled, props}) {
   )
 }
 
-export default Chart
+export default OperationOptionsTable

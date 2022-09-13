@@ -1,13 +1,12 @@
 import { ErrorMessage, Field } from 'formik'
-import React from 'react'
 
-function FormMaker({name,label,type}) {
+function FormMaker({name,label,type,style}) {
   return (
-    <>
+    <div className={style.container}>
       <label htmlFor={name} className="text-white">{label}</label>
-      <Field type={type} name={name} className="customizeForm"/>
+      <Field type={type} name={name} className={style.inputField} />
       <ErrorMessage name={name} render={msg => <div className="text-red-500 font-medium capitalize">{msg}</div>}/>
-    </>
+    </div>
   )
 }
 

@@ -74,7 +74,7 @@ function Search({ patientsList, error }) {
             {/* //* All the patients List  */}
             <tbody>
               {/* checking if there is no data and giving message accordingly */}
-              {(filtered.length == 0 ?? patientsList.length == 0) && (
+              {((searchMode && filtered.length == 0) ?? patientsList.length == 0) && (
                 <tr className="text-center">
                   <th colSpan={5}>Not Found</th>
                 </tr>

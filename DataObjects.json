@@ -1,4 +1,5 @@
-  {
+{
+    "TeethStateGraph" : {
     "OneTr": false,
     "TwoTr": false,
     "ThreeTr": false,
@@ -31,4 +32,14 @@
     "SixBl": false,
     "SevenBl": false,
     "EightBl": false
+    } ,
+    
+    "Operations" :  [
+  {"label" : "Tooth Filling", "value" : "toothfilling" , "name" : "ops"},
+  {"label" : "Orthodantic", "value" : "orthodancy" , "name" : "ops"},
+  {"label" : "Implant", "value" : "implant" , "name" : "ops"},
+  {"label" : "Crown", "value" : "crown" , "name" : "ops"},
+  {"label" : "Bleaching", "value" : "bleaching" , "name" : "ops"},
+  {"label" : "Prosthesis", "value" : "prosthesis" , "name" : "ops"}
+    ]
   }

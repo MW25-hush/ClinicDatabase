@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Navbar from "../components/navbar";
-import Tooth from "../components/tooth";
 import * as Yup from "yup";
 import { doc, setDoc } from "firebase/firestore";
 import { firestore } from "../firebase/clientApp";
-import Chart from "../components/Chart";
-import FormMaker from "../components/registerFormValue";
-import teeth from '../teethState.json'
+import FormMaker from "../components/registerFormMaker";
+import ToothChart from "../components/tooth";
+import OperationOptionsTable from "../components/Chart";
+import json from '../DataObjects.json'
 
 // ! This whole page needs refactorization
 
@@ -51,17 +51,24 @@ const validationSchema = Yup.object().shape({
     .required(),
 });
 
-function Register() {
-  //  the state of the teeth
-  const [checked, setChecked] = useState(teeth);
-  // const date = new Date().toLocaleDateString('fa-IR-u-nu-latn')
+function RegisterPatient() {
+  // the object of tooth graph from json 
+  const teethStateGraph = json.TeethStateGraph
+  //  the state of the teeth graph
+  const [teethGraph, updateTeethGraph] = useState(teethStateGraph);
+  // setting the date to Iranian Formart
+  const date = new Date().toLocaleDateString('fa-IR-u-nu-latn')
 
-  const handleClickSvg = (data) => {
-    let temp = data.target.id;
-    setChecked({ ...checked, [temp]: !checked[temp] });
+  // function for highlighting the teeth in the graph
+  const selectTeeth = (target) => {
+    // taking the id of the target tooth 
+    let toothState = target.target.id;
+    // setting the state of the tooth to it's opposite 
+    updateTeethGraph({ ...teethGraph, [toothState]: !teethGraph[toothState] });
   };
 
-  const handleSubmit = (values, { resetForm }) => {
+  // function which on submit will add the data to the firebase 
+  const addPatient = (values, { resetForm }) => {
     //? Use ResetForm when the response is taken from the firestore
     setDoc(doc(firestore, "user", values.phonenumber.toString()), {
       name: values.name,
@@ -81,8 +88,8 @@ function Register() {
       reflux: values.reflux,
       observation: values.observation,
       ops: values.ops,
-      chart: checked,
-      // registeredAt : date
+      teethGraph,
+      registeredAt : date
     })
       // todo to find the response property out of the firestore
       .then((res) => resetForm());
@@ -101,46 +108,26 @@ function Register() {
 
         <Formik
           initialValues={initialValues}
-          onSubmit={handleSubmit}
+          onSubmit={addPatient}
           validationSchema={validationSchema}
         >
           <Form >
             <div className="lg:flex">
             {/* //*  info section  */}
-            <div className={`m-8 lg:m-4`}>
+            <div className="m-8 lg:m-4">
               <div className="flex flex-wrap gap-2 lg:max-w-4xl ">
                 {/* //? Name input  */}
-                <div className="grow">
-                  <FormMaker name={"name"} type="text" label={"Name"} />
-                </div>
-
+                  <FormMaker name={"name"} type="text" label={"Name"} style={{container : 'grow', inputField : 'customizeForm'}} />
                 {/* //? Last Name input  */}
-                <div className="grow">
-                  <FormMaker name="lastname" label={"Last Name"} type="text" />
-                </div>
+                  <FormMaker name="lastname" label={"Last Name"} type="text" style={{container : 'grow', inputField : 'customizeForm'}}/>
                 {/* Address Input */}
-                <div className="grow">
-                  <FormMaker type={"text"} name="address" label="Address" />
-                </div>
-
+                  <FormMaker type={"text"} name="address" label="Address" style={{container : 'grow', inputField : 'customizeForm'}}/>
                 {/* Job input */}
-                <div className="grow">
-                  <FormMaker type={"text"} name="job" label={"Job"} />
-                </div>
-
+                  <FormMaker type={"text"} name="job" label={"Job"} style={{container : 'grow', inputField : 'customizeForm'}} />
                 {/* Age Input  */}
-                <div className="grow">
-                  <FormMaker type={"number"} name="age" label={"Age"} />
-                </div>
-
+                  <FormMaker type={"number"} name="age" label={"Age"} style={{container : 'grow', inputField : 'customizeForm'}} />
                 {/* payment amount  */}
-                <div className="grow">
-                  <FormMaker
-                    type={"text"}
-                    name="payment"
-                    label={"Payment Amount"}
-                  />
-                </div>
+                  <FormMaker type={"text"} name="payment" label={"Payment Amount"} style={{container : 'grow', inputField : 'customizeForm'}}/>
               </div>
 
               {/* phone number */}
@@ -233,66 +220,22 @@ function Register() {
                   <div className="flex gap-5">
                     {/* "H" family  */}
                     <div className=" flex flex-col  text-white gap-1">
-                      <div className="flex items-center gap-2 ">
-                        <label>HIV</label>
-                        <Field
-                          type="checkbox"
-                          name="HIV"
-                          className="rounded check"
-                        />
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <label>HCV</label>
-                        <Field
-                          type="checkbox"
-                          name="HCV"
-                          className="rounded check "
-                        />
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <label>HBS</label>
-                        <Field
-                          type="checkbox"
-                          name="HBS"
-                          className="check rounded"
-                        />
-                      </div>
+                      <FormMaker type={"checkbox"} name="HIV" label={"HIV"} style={{container : 'flex items-center gap-2', inputField : 'check rounded'}} />
+                      <FormMaker type={"checkbox"} name="HCV" label={"HCV"} style={{container : 'flex items-center gap-2', inputField : 'check rounded'}} />
+                      <FormMaker type={"checkbox"} name="HBS" label={"HBS"} style={{container : 'flex items-center gap-2', inputField : 'check rounded'}}/>
                     </div>
 
                     {/* diagnosis */}
                     <div className="w-full flex flex-col text-white gap-1">
-                      <div className="flex items-center gap-2">
-                        <label>Pregnancy</label>
-                        <Field
-                          type="checkbox"
-                          name="pregnancy"
-                          className="rounded check"
-                        />
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <label>Diabetes</label>
-                        <Field
-                          type="checkbox"
-                          name="diabetes"
-                          className="rounded check"
-                        />
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <label>Reflux Esophagitis</label>
-                        <Field
-                          type="checkbox"
-                          name="reflux"
-                          className="rounded check"
-                        />
-                      </div>
-                    </div>
+                      <FormMaker type={"checkbox"} name="pregnancy" label={"Pregnancy"} style={{container : 'flex items-center gap-2', inputField : 'check rounded'}}/>
+                      <FormMaker type={"checkbox"} name="diabetes" label={"Diabetes"} style={{container : 'flex items-center gap-2', inputField : 'check rounded'}}/>
+                      <FormMaker type={"checkbox"} name="reflux" label={"Reflux Esophagitis"} style={{container : 'flex items-center gap-2', inputField : 'check rounded'}}/>
                   </div>
                 </div>
+              </div>
                 {/* text observation  */}
                 <div className="text-white grow  mx-5 lg:mx-0 lg:mt-3 lg:max-w-md ">
-                  <label className="font-semibold italic">Observation</label>
+                <label className="font-semibold italic">Observation</label>
                   <Field
                     as="textarea"
                     className="customizeForm h-32"
@@ -300,38 +243,36 @@ function Register() {
                     placeholder="The Notes by the Doctor..."
                   />
                 </div>
-              </div>
             </div>
-
+            </div>
             {/*//* Table of operation and Teeth  */}
             <div
               className={`flex items-center bg-slate-800 md:max-w-2xl lg:max-w-none mx-auto lg:mt-8 lg:flex-wrap xl:grow xl:block lg:mx-2 lg:bg-black  lg:space-y-6`}
             >
-              {/* table  */}
+              {/* Operation Table  */}
               <div className="grow xl:max-w-lg">
-                <Chart
+                <OperationOptionsTable
                   chartStyle={{
-                    body: "",
-                    head: "!mx-2",
-                    table: "",
+                    head: "!mx-2 ",
                   }}
                   disabled={false}
                 />
               </div>
-              <span className="border-r border-gray-400 h-64 lg:hidden"></span>
+              <span className="border-r border-gray-400 h-64 lg:hidden"/>
               {/* Tooth chart SVG */}
               <div className="lg:bg-slate-800 lg:rounded xl:max-w-sm ">
                 <h1 className="text-white p-2 font-semibold text-center capitalize">
                   Hightlight the Teeth needing treatment{" "}
                 </h1>
-                <Tooth
-                  toothStyle={"md:!w-56 lg:!w-64 "}
-                  checked={checked}
-                  handleClickSvg={handleClickSvg}
+                <ToothChart
+                  teethStyle={"md:!w-56 lg:!w-64 "}
+                  teethIsSelected={teethGraph}
+                  selectTeethFunction={selectTeeth}
                 />
               </div>
             </div>
-        </div>
+        
+      </div>
             {/*  button of submission */}
             <div className="flex justify-center lg:justify-start ml-10  h-9 mt-4 mb-8">
               <button
@@ -348,4 +289,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterPatient;
