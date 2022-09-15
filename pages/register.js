@@ -60,9 +60,9 @@ function RegisterPatient() {
   const date = new Date().toLocaleDateString('fa-IR-u-nu-latn')
 
   // function for highlighting the teeth in the graph
-  const selectTeeth = (target) => {
+  const selectTeeth = (teeth) => {
     // taking the id of the target tooth 
-    let toothState = target.target.id;
+    let toothState = teeth.target.id;
     // setting the state of the tooth to it's opposite 
     updateTeethGraph({ ...teethGraph, [toothState]: !teethGraph[toothState] });
   };
