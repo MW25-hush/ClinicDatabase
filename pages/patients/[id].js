@@ -182,7 +182,7 @@ const PatientInfo = () => {
             <Form>
               {/* Header of the page includes the 2 first parts of the page */}
               <HeaderSection
-                {...{ editActive, patientData, deletePatient, submitUpdate }}
+               {...{ editActive, patientData, deletePatient, submitUpdate }}
               />
               {/* patient profile */}
               <div className="2xl:max-w-7xl 2xl:mx-auto  ">

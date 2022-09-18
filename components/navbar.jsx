@@ -15,10 +15,10 @@ const Navbar = () => {
                  {/* //todo to make it look the other project 
                   */}
                          {/* home icon  */}
-                     <div className={`w-full h-14 hover:bg-white group ${router.route === '/' ? 'bg-white' : ''} `} >
-                      <Link href={'/'} passHref>
+                     <div className={`w-full h-14 hover:bg-white group ${router.route === '/Home' ? 'bg-white' : ''} `} >
+                      <Link href={'/Home'} passHref>
                       <a>
-                         <AiOutlineHome className={`navicon ${router.route === '/' ? 'text-black ' : 'text-white'}`}/> 
+                         <AiOutlineHome className={`navicon ${router.route === '/Home' ? 'text-black ' : 'text-white'}`}/> 
                       </a>
                       </Link>
                      </div>
