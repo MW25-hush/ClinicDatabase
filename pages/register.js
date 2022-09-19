@@ -8,6 +8,7 @@ import FormMaker from "../components/registerFormMaker";
 import ToothChart from "../components/tooth";
 import OperationOptionsTable from "../components/Chart";
 import json from '../DataObjects.json'
+import { useSession } from "next-auth/react";
 
 // ! This whole page needs refactorization
 
@@ -52,6 +53,8 @@ const validationSchema = Yup.object().shape({
 });
 
 function RegisterPatient() {
+  const { data: session, status } = useSession();
+  console.log(session);
   // the object of tooth graph from json 
   const teethStateGraph = json.TeethStateGraph
   //  the state of the teeth graph

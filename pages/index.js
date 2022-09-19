@@ -23,9 +23,10 @@ const LogIn = () => {
   };
 
   return (
-    <div className="bg-black h-screen">
+    <div className="bg-black h-screen flex items-center">
       {/* Form */}
-      <div className="w-3/12 mx-auto text-white py-10">
+      <div className="max-w-xs mx-auto text-white p-8 border rounded  ">
+        <h1 className="font-semibold text-lg">Log In</h1>
         <Formik
           onSubmit={LoginFunction}
           initialValues={{ username: "", password: "" }}
@@ -52,9 +53,13 @@ const LogIn = () => {
             >
               {error.errorMessage}
             </div>
-            <button type="submit" className="bg-mygreen w-20 mt-5 ">
+
+            <div className="flex justify-center">
+            <button type="submit" className="bg-mygreen w-24 mt-5 p-1 rounded">
               Log In
             </button>
+            </div>
+
           </Form>
         </Formik>
       </div>

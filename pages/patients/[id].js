@@ -3,19 +3,13 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Navbar from "../../components/navbar";
 import { firestore } from "../../firebase/clientApp";
-import { BsPerson } from "react-icons/bs";
-import { Field, Form, Formik } from "formik";
-import { FaHistory } from "react-icons/fa";
-import { BiEdit } from "react-icons/bi";
+import {  Form, Formik } from "formik";
 import Image from "next/image";
-import ValueForm from "../../components/valueForm";
 import ToothChart from "../../components/tooth";
 import { toast, ToastContainer } from "react-toastify";
 import loading_spinner from "../../public/loading_spinner.svg";
 import HeaderSection from "../../components/patientsPageHeader";
 import OperationOptionsTable from "../../components/Chart";
-import PersonalInfo from "../../components/PersonalInfoComponent";
-import PatientSocialInfo from "../../components/patientsSocialInfoComponent";
 import PatientSocial from "../../components/PatientSocialInfoContainer";
 import PatientsObservation from "../../components/PatientObsevationComponent";
 import PatientsPersonalInfo from "../../components/PersonalInfoComponent";
@@ -71,10 +65,6 @@ const PatientInfo = () => {
         toast.error(e.message);
       }
     }
-    //! not sure on error handling on this block
-    // return () => {
-    //   setData([])
-    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
