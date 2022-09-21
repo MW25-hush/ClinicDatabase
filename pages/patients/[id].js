@@ -3,20 +3,22 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Navbar from "../../components/navbar";
 import { firestore } from "../../firebase/clientApp";
-import {  Form, Formik } from "formik";
-import Image from "next/image";
+import { Form, Formik } from "formik";
 import ToothChart from "../../components/tooth";
 import { toast, ToastContainer } from "react-toastify";
-import loading_spinner from "../../public/loading_spinner.svg";
 import HeaderSection from "../../components/patientsPageHeader";
 import OperationOptionsTable from "../../components/Chart";
 import PatientSocial from "../../components/PatientSocialInfoContainer";
 import PatientsObservation from "../../components/PatientObsevationComponent";
 import PatientsPersonalInfo from "../../components/PersonalInfoComponent";
 import PatientsPayment from "../../components/PatientsPaymentComponent";
+import { useSession } from "next-auth/react";
+import Modal from "../../components/ModalComponent";
+import LoadingSpinner from "../../components/loadingComponent";
 
 const PatientInfo = () => {
   // router object for taking the id of the patient
+  const { status } = useSession();
   const router = useRouter();
   const {
     query: { id },
@@ -155,16 +157,16 @@ const PatientInfo = () => {
     })();
   };
 
-  return (
+  return status == "unauthenticated" ? (
+    <Modal />
+  ) : (
     <div className="bg-black min-h-screen overflow-auto flex ">
       <ToastContainer />
       {/* navbar  */}
       <Navbar />
       {/* Profile of Patient */}
       {patientData == undefined ? (
-        <div className="flex justify-center items-center grow ">
-          <Image alt="loading" height={150} width={150} src={loading_spinner} />{" "}
-        </div>
+        <LoadingSpinner/>
       ) : (
         <div className="pt-3 grow ">
           {/*//* the First header  */}
@@ -172,7 +174,7 @@ const PatientInfo = () => {
             <Form>
               {/* Header of the page includes the 2 first parts of the page */}
               <HeaderSection
-               {...{ editActive, patientData, deletePatient, submitUpdate }}
+                {...{ editActive, patientData, deletePatient, submitUpdate }}
               />
               {/* patient profile */}
               <div className="2xl:max-w-7xl 2xl:mx-auto  ">

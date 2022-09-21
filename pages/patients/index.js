@@ -1,7 +1,9 @@
 import { collection, getDocs } from "firebase/firestore";
 import { Formik } from "formik";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import Modal from "../../components/ModalComponent";
 import Navbar from "../../components/navbar";
 import PatientInfo from "../../components/patientsInfoTable";
 import { firestore } from "../../firebase/clientApp";
@@ -10,13 +12,14 @@ import { firestore } from "../../firebase/clientApp";
 
 function Search({ patientsList, error }) {
   // ! in testing the error variable will have it's place
+  const { status } = useSession();
 
   const [searchMode, setSearchMode] = useState(false);
   const [filtered, setFiltered] = useState([]);
 
   //? filter the patients using the phone number
   const searchPatientPhoneNumber = (e) => {
-    let phoneNumber = e.target.value
+    let phoneNumber = e.target.value;
     // check for string length and then display accordingly
     phoneNumber.length > 0 ? setSearchMode(true) : setSearchMode(false);
 
@@ -29,7 +32,9 @@ function Search({ patientsList, error }) {
     );
   };
 
-  return (
+  return status == "unauthenticated" ? (
+    <Modal />
+  ) : (
     <div className="bg-black h-screen flex">
       {/* navbar */}
       <Navbar />
@@ -74,7 +79,8 @@ function Search({ patientsList, error }) {
             {/* //* All the patients List  */}
             <tbody>
               {/* checking if there is no data and giving message accordingly */}
-              {((searchMode && filtered.length == 0) ?? patientsList.length == 0) && (
+              {((searchMode && filtered.length == 0) ??
+                patientsList.length == 0) && (
                 <tr className="text-center">
                   <th colSpan={5}>Not Found</th>
                 </tr>
@@ -107,33 +113,30 @@ function Search({ patientsList, error }) {
 
 export default Search;
 
-// todo may be the static function is not approparitate  try the serverside props or render it on the client side
+// ? may be the static function is not approparitate  try the serverside props or render it on the client side
 
-          export async function getStaticProps() {
-            const patientsCollectionReference = collection(firestore, "user");
-            let patientsList = [];
-            let error = "";
-            try {
-              await getDocs(patientsCollectionReference).then((snapshot) => {
-                snapshot.forEach((doc) => {
-                  patientsList.push({ ...doc.data(), id: doc.id });
-                  console.log(doc);
-                });
-              });
-              // console.log(patientsList);
-            } catch (e) {
-              error = e.message;
-            }
+export async function getStaticProps() {
+  const patientsCollectionReference = collection(firestore, "user");
+  let patientsList = [];
+  let error = "";
+  try {
+    await getDocs(patientsCollectionReference).then((snapshot) => {
+      snapshot.forEach((doc) => {
+        patientsList.push({ ...doc.data(), id: doc.id });
+      });
+    });
+    // console.log(patientsList);
+  } catch (e) {
+    error = e.message;
+  }
 
-            return {
-              props: {
-                patientsList,
-              },
-            };
-          }
+  return {
+    props: {
+      patientsList,
+    },
+  };
+}
 // add registry date to paylog
 // making 2 kinds of view option for the patient list 1 table 2 card
-// refactor the code tonight
-// adding the authentication
 // testing the application
 // makikng the pre-requirements for the dashboard page and calender page

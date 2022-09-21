@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { AiOutlineDollarCircle, AiOutlineHome, AiOutlineSearch } from 'react-icons/ai';
+import {  AiOutlineHome, AiOutlineSearch } from 'react-icons/ai';
 import { FiPlusCircle } from 'react-icons/fi';
 import {useRouter} from 'next/router';
+import { BsCalendarDate } from 'react-icons/bs';
 
 const Navbar = () => {
     const router = useRouter();  
@@ -42,7 +43,7 @@ const Navbar = () => {
                  <div className={`w-full h-14 hover:bg-white group ${router.route === '/calender' ? 'bg-white' : ''}`}>
                   <Link href={'/calender'} passHref>
                   <a>
-                     <AiOutlineDollarCircle className={`navicon ${router.route === '/calender' ? 'text-black' : 'text-white'}`}/>
+                     <BsCalendarDate className={`navicon ${router.route === '/calender' ? 'text-black' : 'text-white'}`}/>
                   </a>
                   </Link>
                  </div>
