@@ -29,9 +29,8 @@ const PatientInfo = () => {
   const [editActive, setEditStatus] = useState(false);
   // the values of patients Data are initially stored and after modification the modified values will be submitted to the server
   const [afterEditValues, setAfterEditValues] = useState({
-    search: "",
     ops: [],
-    chart: {},
+    teethGraph: {},
     name: "",
     last_name: "",
     address: "",
@@ -54,13 +53,15 @@ const PatientInfo = () => {
             setAfterEditValues({
               ...afterEditValues,
               ops: snapshot.data().ops,
-              chart: snapshot.data().chart,
+              teethGraph: snapshot.data().teethGraph,
               name: snapshot.data().name,
               last_name: snapshot.data().last_name,
               address: snapshot.data().address,
               payment_amount: snapshot.data().payment_amount,
             });
           } else {
+            //
+            setPatientData("null");
           }
         });
       } catch (e) {
@@ -102,6 +103,7 @@ const PatientInfo = () => {
   const submitUpdate = (condition) => {
     if (condition === "status") setEditStatus(!editActive);
     if (condition === "update") {
+      console.log(afterEditValues);
       (async function () {
         await setDoc(doc(firestore, "user", id), {
           ...patientData,
@@ -109,7 +111,7 @@ const PatientInfo = () => {
           last_name: afterEditValues.last_name,
           address: afterEditValues.address,
           ops: afterEditValues.ops,
-          chart: afterEditValues.chart,
+          teeth: afterEditValues.teethGraph,
         })
           .then(() => setEditStatus(false))
           .catch((e) => {
@@ -166,18 +168,26 @@ const PatientInfo = () => {
       <Navbar />
       {/* Profile of Patient */}
       {patientData == undefined ? (
-        <LoadingSpinner/>
+        <LoadingSpinner />
+      ) : patientData == "null" ? (
+        <div className="text-white grid   text-xl font-bold">
+          <h1>The Document Does Not Exist</h1>
+          <button className="">Back to List </button>
+        </div>
       ) : (
         <div className="pt-3 grow ">
           {/*//* the First header  */}
-          <Formik initialValues={afterEditValues}>
+          {/* Header of the page includes the 2 first parts of the page */}
+          <HeaderSection
+            {...{ editActive, patientData, deletePatient, submitUpdate }}
+          />
+          <Formik
+            initialValues={afterEditValues}
+            onSubmit={(values) => console.log(values)}
+          >
             <Form>
-              {/* Header of the page includes the 2 first parts of the page */}
-              <HeaderSection
-                {...{ editActive, patientData, deletePatient, submitUpdate }}
-              />
               {/* patient profile */}
-              <div className="2xl:max-w-7xl 2xl:mx-auto  ">
+              <div className="2xl:max-w-7xl 2xl:mx-auto">
                 {/* photo info and observation  */}
                 <div className="flex md:flex-wrap lg:flex-nowrap ">
                   {/* photo  */}
@@ -222,7 +232,9 @@ const PatientInfo = () => {
                       }`}
                       selectTeethFunction={selectTeeth}
                       teethIsSelected={
-                        editActive ? afterEditValues?.chart : patientData?.chart
+                        editActive
+                          ? afterEditValues?.teethGraph
+                          : patientData?.teethGraph
                       }
                     />
                   </div>

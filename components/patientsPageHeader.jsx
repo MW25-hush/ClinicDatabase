@@ -1,12 +1,25 @@
-import { Field } from "formik";
+import { Field, Form, Formik } from "formik";
 import Link from "next/link";
-import { AiFillSave, AiOutlinePlus, AiOutlineSearch, AiOutlineUserDelete } from "react-icons/ai";
+import { useRouter } from "next/router";
+import {
+  AiFillSave,
+  AiOutlinePlus,
+  AiOutlineSearch,
+  AiOutlineUserDelete,
+} from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import { BsPerson } from "react-icons/bs";
 import { ImPrinter } from "react-icons/im";
 import { MdArrowForwardIos, MdCancel } from "react-icons/md";
 
-const HeaderSection = ({patientData, editActive, deletePatient, submitUpdate}) => {
+const HeaderSection = ({
+  patientData,
+  editActive,
+  deletePatient,
+  submitUpdate,
+}) => {
+  // router object
+  const router = useRouter();
   return (
     <>
       <div className="flex  text-white w-full justify-between px-10 ">
@@ -23,15 +36,25 @@ const HeaderSection = ({patientData, editActive, deletePatient, submitUpdate}) =
         {/*  search  input and add button  */}
         <div className="flex gap-4 items-center relative">
           <AiOutlineSearch size={20} className="absolute bottom-2 left-4" />
-          <Field
-            type="number"
-            className="customizeForm bg-slate-800 rounded-2xl pl-10 w-52"
-            name="search"
-            placeholder="Search"
-          />
-          <div className="border-2 border-mygreen rounded-full hover:bg-mygreen  p-1.5">
-            <AiOutlinePlus size={25} />
-          </div>
+          <Formik
+            initialValues={{ search: "" }}
+            onSubmit={(values) => router.push(`/patients/${values.search}`)}
+          >
+            <Form>
+              <Field
+                type="number"
+                className="customizeForm bg-slate-800 rounded-2xl pl-10 w-52"
+                name="search"
+                placeholder="Search"
+              />
+            </Form>
+          </Formik>
+
+          <Link href={"/register"} passHref>
+            <div className="border-2 border-mygreen rounded-full hover:bg-mygreen p-1.5">
+              <AiOutlinePlus size={25} />
+            </div>
+          </Link>
         </div>
       </div>
       <hr className="my-4 border-slate-600 w-full" />
@@ -57,7 +80,8 @@ const HeaderSection = ({patientData, editActive, deletePatient, submitUpdate}) =
           <div
             className={`${
               editActive ? "hidden" : "flex"
-            } bg-slate-400 p-1.5 hover:text-slate-300>`}
+            } bg-slate-400 p-1.5 hover:scale-110 `}
+            onClick={() => window.print()}
           >
             <ImPrinter size={25} />
           </div>

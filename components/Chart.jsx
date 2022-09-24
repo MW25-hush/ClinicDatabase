@@ -1,11 +1,9 @@
 import { ErrorMessage, Field } from 'formik';
 import json from '../DataObjects.json'
 
-
 function OperationOptionsTable({chartStyle,checked, disabled, props}) {
   // table of operations 
   const listOfOperations = json.Operations
-   
 
   return (
     <>

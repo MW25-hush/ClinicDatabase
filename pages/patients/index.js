@@ -2,7 +2,12 @@ import { collection, getDocs } from "firebase/firestore";
 import { Formik } from "formik";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { AiOutlineSearch } from "react-icons/ai";
+import {
+  AiOutlineIdcard,
+  AiOutlineOrderedList,
+  AiOutlineSearch,
+} from "react-icons/ai";
+import CardTypePatientInfo from "../../components/CardTypePatientInformationComponent";
 import Modal from "../../components/ModalComponent";
 import Navbar from "../../components/navbar";
 import PatientInfo from "../../components/patientsInfoTable";
@@ -16,6 +21,7 @@ function Search({ patientsList, error }) {
 
   const [searchMode, setSearchMode] = useState(false);
   const [filtered, setFiltered] = useState([]);
+  const [typeOfView, setTypeOfView] = useState({ list: true, card: false });
 
   //? filter the patients using the phone number
   const searchPatientPhoneNumber = (e) => {
@@ -32,6 +38,13 @@ function Search({ patientsList, error }) {
     );
   };
 
+  // typeofView function
+  const handleTypeOfView = (type) => {
+    type == "list"
+      ? setTypeOfView({ card: false, list: true })
+      : setTypeOfView({ card: true, list: false });
+  };
+
   return status == "unauthenticated" ? (
     <Modal />
   ) : (
@@ -41,9 +54,31 @@ function Search({ patientsList, error }) {
 
       {/* header */}
       <div className="grow">
-        <h1 className="text-white text-3xl font-bold font-serif pt-10 px-8">
-          Search
-        </h1>
+        {/* Title */}
+        <div className="flex justify-between mx-8 mt-4">
+          <div>
+            <h1 className="text-white text-3xl font-bold font-serif ">
+              Search
+            </h1>
+          </div>
+          {/*List and Card Option View  */}
+          <div className="text-white flex gap-4 ">
+            <AiOutlineOrderedList
+              size={30}
+              className={`${
+                typeOfView.list && "scale-110 !text-white"
+              } text-gray-400`}
+              onClick={() => handleTypeOfView("list")}
+            />
+            <AiOutlineIdcard
+              size={30}
+              className={`${
+                typeOfView.card && "scale-110 !text-white"
+              } text-gray-400`}
+              onClick={() => handleTypeOfView("card")}
+            />
+          </div>
+        </div>
 
         {/* input field for search functionality  */}
         <div className="mx-7 mt-28 relative text-white">
@@ -63,9 +98,13 @@ function Search({ patientsList, error }) {
           </Formik>
         </div>
 
-        {/* table to show patient list */}
-        <div className="text-white border  mx-5 border-slate-600 rounded mt-20">
-          <table className="w-full table-auto ">
+        {/* type: table to show patient list */}
+        <div
+          className={`text-white border  mx-5 border-slate-600 rounded mt-20 ${
+            typeOfView.list ? " block" : "hidden"
+          } `}
+        >
+          <table className="w-full table-auto">
             <thead className="bg-black border-b border-slate-600 ">
               <tr className="">
                 <th>No:</th>
@@ -79,10 +118,10 @@ function Search({ patientsList, error }) {
             {/* //* All the patients List  */}
             <tbody>
               {/* checking if there is no data and giving message accordingly */}
-              {((searchMode && filtered.length == 0) ??
+              {((searchMode && filtered.length == 0) ||
                 patientsList.length == 0) && (
                 <tr className="text-center">
-                  <th colSpan={5}>Not Found</th>
+                  <th colSpan={5}>The List Is Empty</th>
                 </tr>
               )}
               {/* rendering the data by 2 possibilities 1: original data 2: filteredData */}
@@ -106,6 +145,39 @@ function Search({ patientsList, error }) {
             </tbody>
           </table>
         </div>
+
+        {/* type :  cards to show the patient */}
+        <div className="text-white">
+          {/* checking if there is no data and giving message accordingly */}
+          {((searchMode && filtered.length == 0) ||
+            patientsList.length == 0) && (
+            <div className="text-center mt-10 text-xl font-bold">
+              <h1>The List is Empty!</h1>
+            </div>
+          )}
+          {/* rendering the data by 2 possibilities 1: original data 2: filteredData */}
+          <div className={`${typeOfView.card ? 'flex' : 'hidden'} gap-3 flex-wrap mt justify-center mt-10`}>
+            {searchMode
+              ? // by typing on the input the searchMode is activated thus the filter array will be rendered
+                filtered.map((patient) => (
+                  <CardTypePatientInfo
+                    key={patient.phone_number}
+                    patientName={patient.name}
+                    patientLastName={patient.last_name}
+                    patientNumber={patient.phone_number}
+                  />
+                ))
+              : // and if the input length is '0' the original data will be rendered
+                patientsList?.map((patient) => (
+                  <CardTypePatientInfo
+                    key={patient.phone_number}
+                    patientName={patient.name}
+                    patientLastName={patient.last_name}
+                    patientNumber={patient.phone_number}
+                  />
+                ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -125,7 +197,6 @@ export async function getStaticProps() {
         patientsList.push({ ...doc.data(), id: doc.id });
       });
     });
-    // console.log(patientsList);
   } catch (e) {
     error = e.message;
   }
@@ -134,6 +205,7 @@ export async function getStaticProps() {
     props: {
       patientsList,
     },
+    revalidate: 10,
   };
 }
 // add registry date to paylog

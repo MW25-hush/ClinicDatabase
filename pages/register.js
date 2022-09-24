@@ -11,6 +11,8 @@ import json from "../DataObjects.json";
 import { useSession } from "next-auth/react";
 import Modal from "../components/ModalComponent";
 import LoadingSpinner from "../components/loadingComponent";
+import { toast, ToastContainer } from "react-toastify";
+import  { useRouter } from "next/router";
 
 const initialValues = {
   name: "",
@@ -61,6 +63,8 @@ function RegisterPatient() {
   const [teethGraph, updateTeethGraph] = useState(teethStateGraph);
   // setting the date to Iranian Formart
   const date = new Date().toLocaleDateString("fa-IR-u-nu-latn");
+  // router 
+  const router = useRouter()
 
   // function for highlighting the teeth in the graph
   const selectTeeth = (teeth) => {
@@ -94,20 +98,30 @@ function RegisterPatient() {
       teethGraph,
       registeredAt: date,
     })
-      // todo to find the response property out of the firestore
-      .then((res) => resetForm());
+      .then(() => {
+        toast.success("Patient Added");
+        // router.push('/patients')
+        resetForm();
+        updateTeethGraph(teethStateGraph);
+      })
+      .then(() => router.push('/patients'))
+      .catch((e) => console.log(e));
+      
+
+    // todo to find the response property out of the firestore
   };
 
-  // authenticating the page 
+  // authenticating the page
   return status == "unauthenticated" ? (
     <div className="flex h-screen justify-center bg-black items-center grow">
+      <ToastContainer />
       <Modal />
     </div>
   ) : (
     <div className="bg-black flex min-h-screen overflow-auto">
       {/* navbar */}
       <Navbar />
-
+      <ToastContainer />
       {status == "loading" ? (
         <LoadingSpinner />
       ) : (
