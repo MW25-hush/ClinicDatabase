@@ -205,10 +205,9 @@ export async function getStaticProps() {
     props: {
       patientsList,
     },
-    revalidate: 10,
+    revalidate: 1,
   };
 }
 // add registry date to paylog
-// making 2 kinds of view option for the patient list 1 table 2 card
 // testing the application
 // makikng the pre-requirements for the dashboard page and calender page

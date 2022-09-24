@@ -14,23 +14,18 @@ export default NextAuth({
       // credentials: {},
       async authorize(credentials) {
         const { username, password } = credentials;
-
-        // validating the the database Entry
-        //   (username == 'admin' && password == '3131') ? {role : 'Admin'} :
-        //  ( username == 'editor' && password == '2525') ? {role : 'Standard'} : null
-
         if (username == "admin") {
-          if (password === "3131")
+          if (password === process.env.NEXTADMIN)
             return {
               name: username,
             };
         } else if (username == "editor") {
-          if (password == "2525")
+          if (password == process.env.NEXTEDITOR)
             return {
               name: username,
             };
         } else {
-          return null
+          return null;
         }
       },
     }),
@@ -38,5 +33,5 @@ export default NextAuth({
   pages: {
     signIn: "/",
   },
-  secret : process.env.NEXTAUTH_SECRET
+  secret: process.env.NEXTAUTH_SECRET,
 });

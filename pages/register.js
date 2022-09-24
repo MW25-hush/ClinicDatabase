@@ -100,11 +100,10 @@ function RegisterPatient() {
     })
       .then(() => {
         toast.success("Patient Added");
-        // router.push('/patients')
-        resetForm();
-        updateTeethGraph(teethStateGraph);
+        router.push('/patients')
+        // resetForm();
+        // updateTeethGraph(teethStateGraph);
       })
-      .then(() => router.push('/patients'))
       .catch((e) => console.log(e));
       
 
