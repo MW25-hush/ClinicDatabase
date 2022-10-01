@@ -15,6 +15,7 @@ import PatientsPayment from "../../components/PatientsPaymentComponent";
 import { useSession } from "next-auth/react";
 import Modal from "../../components/ModalComponent";
 import LoadingSpinner from "../../components/loadingComponent";
+import Link from "next/link";
 
 const PatientInfo = () => {
   // router object for taking the id of the patient
@@ -94,7 +95,7 @@ const PatientInfo = () => {
       // updating the chart
       chart: {
         ...prevState.chart,
-        [e.target.id]: !prevState.chart[teeth.target.id],
+        [teeth.target.id]: !prevState.chart[teeth.target.id],
       },
     }));
   };
@@ -170,9 +171,9 @@ const PatientInfo = () => {
       {patientData == undefined ? (
         <LoadingSpinner />
       ) : patientData == "null" ? (
-        <div className="text-white grid   text-xl font-bold">
+        <div className="text-white mx-auto text-xl my-auto font-bold">
           <h1>The Document Does Not Exist</h1>
-          <button className="">Back to List </button>
+          <button className="border-slate-500 border-2 px-2 py-1 rounded mt-2 hover:bg-gray-400 hover:border-0 transition hover:text-black "><Link href={'/patients'}>Back to List</Link></button>
         </div>
       ) : (
         <div className="pt-3 grow ">

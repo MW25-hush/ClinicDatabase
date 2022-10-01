@@ -156,7 +156,11 @@ function Search({ patientsList, error }) {
             </div>
           )}
           {/* rendering the data by 2 possibilities 1: original data 2: filteredData */}
-          <div className={`${typeOfView.card ? 'flex' : 'hidden'} gap-3 flex-wrap mt justify-center mt-10`}>
+          <div
+            className={`${
+              typeOfView.card ? "flex" : "hidden"
+            } gap-3 flex-wrap mt justify-center mt-10`}
+          >
             {searchMode
               ? // by typing on the input the searchMode is activated thus the filter array will be rendered
                 filtered.map((patient) => (
@@ -187,7 +191,7 @@ export default Search;
 
 // ? may be the static function is not approparitate  try the serverside props or render it on the client side
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const patientsCollectionReference = collection(firestore, "user");
   let patientsList = [];
   let error = "";
@@ -205,7 +209,6 @@ export async function getStaticProps() {
     props: {
       patientsList,
     },
-    revalidate: 1,
   };
 }
 // add registry date to paylog
