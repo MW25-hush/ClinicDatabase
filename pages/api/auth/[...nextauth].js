@@ -15,12 +15,12 @@ export default NextAuth({
       async authorize(credentials) {
         const { username, password } = credentials;
         if (username == "admin") {
-          if (password === process.env.NEXTADMIN)
+          if (password === process.env.NEXT_ADMIN)
             return {
               name: username,
             };
         } else if (username == "editor") {
-          if (password == process.env.NEXTEDITOR)
+          if (password == process.env.NEXT_EDITOR)
             return {
               name: username,
             };
