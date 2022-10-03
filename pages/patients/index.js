@@ -1,4 +1,3 @@
-
 import { collection, getDocs } from "firebase/firestore";
 import { Formik } from "formik";
 import { useSession } from "next-auth/react";
@@ -14,16 +13,13 @@ import Navbar from "../../components/navbar";
 import PatientInfo from "../../components/patientsInfoTable";
 import { firestore } from "../../firebase/clientApp";
 
-//! can realtime database be used with the getstaticprops or with getServersideProps
-
-function Search({patientsList, error}) {
+function Search({ patientsList, error }) {
   // ! in testing the error variable will have it's place
   const { status } = useSession();
 
   const [searchMode, setSearchMode] = useState(false);
   const [filtered, setFiltered] = useState([]);
   const [typeOfView, setTypeOfView] = useState({ list: true, card: false });
-  // const [patientsList, setPatients] = useState([]);
 
   //? filter the patients using the phone number
   const searchPatientPhoneNumber = (e) => {
@@ -39,26 +35,6 @@ function Search({patientsList, error}) {
       })
     );
   };
-
-  // fetching the data client Side
-  // useEffect(() => {
-  //   const patientsCollectionReference = collection(firestore, "user");
-  //   let patientDocs = [];
-  //   let error = "";
-  //   (async () => {
-  //     try {
-  //       await getDocs(patientsCollectionReference).then((snapshot) => {
-  //         snapshot.forEach((doc) => {
-  //           patientDocs.push({ ...doc.data(), id: doc.id });
-  //         });
-  //       });
-  //     } catch (e) {
-  //       error = e.message;
-  //     } finally {
-  //       setPatients(patientDocs);
-  //     }
-  //   })();
-  // },[patientsList]);
 
   // typeofView function
   const handleTypeOfView = (type) => {
@@ -230,6 +206,8 @@ export async function getStaticProps() {
   return {
     props: {
       patientsList,
+      error
     },
+    revalidate : 1
   };
 }

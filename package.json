@@ -1,6 +1,6 @@
 {
-  "name": "demo",
-  "private": true,
+  "name": "myClinicDatabase",
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
