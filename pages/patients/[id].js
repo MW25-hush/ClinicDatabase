@@ -104,7 +104,6 @@ const PatientInfo = () => {
   const submitUpdate = (condition) => {
     if (condition === "status") setEditStatus(!editActive);
     if (condition === "update") {
-      console.log(afterEditValues);
       (async function () {
         await setDoc(doc(firestore, "user", id), {
           ...patientData,
@@ -218,7 +217,7 @@ const PatientInfo = () => {
                         table: "h-full  ",
                       }}
                       checked={
-                        editActive ? afterEditValues.ops : patientData?.ops
+                        editActive ? afterEditValues?.ops : patientData?.ops
                       }
                       disabled={!editActive}
                       props={{ onChange: updateOperationTable }}
