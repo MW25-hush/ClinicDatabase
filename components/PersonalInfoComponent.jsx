@@ -1,5 +1,4 @@
 import Image from "next/image";
-import ValueForm from "./valueForm";
 import male from "../public/man.png";
 import female from "../public/woman.png";
 import { Field } from "formik";

@@ -55,38 +55,18 @@ const PatientSocial = ({ patientData }) => {
           label="Pregnancy"
           value={patientData?.pregnancy ? "True" : "False"}
         />
-        {/* <ValueForm
-          name="pregnancy"
-          type="text"
-          data={patientData?.pregnancy}
-          label="Pregnancy"
-          disabled={true}
-        /> */}
+
         {/* diabetes */}
         <PatientSocialInfo
           label="Diabetes"
           value={patientData?.diabetes ? "True" : "False"}
         />
-        {/* <ValueForm
-          name="diabetes"
-          type="text"
-          data={patientData?.diabetes}
-          label="Diabetes"
-          disabled={true}
-        /> */}
+
         {/* reflux */}
         <PatientSocialInfo
           label="Reflux Esophagitis"
           value={patientData?.reflux ? "True" : "False"}
         />
-        {/* 
-        <ValueForm
-          name="reflux"
-          type="text"
-          data={patientData?.reflux}
-          label="Reflux Esophagits"
-          disabled={true}
-        /> */}
       </div>
     </div>
   );
