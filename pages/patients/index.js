@@ -1,3 +1,4 @@
+
 import { collection, getDocs } from "firebase/firestore";
 import { Formik } from "formik";
 import { useSession } from "next-auth/react";
@@ -15,13 +16,14 @@ import { firestore } from "../../firebase/clientApp";
 
 //! can realtime database be used with the getstaticprops or with getServersideProps
 
-function Search({ patientsList, error }) {
+function Search({patientsList, error}) {
   // ! in testing the error variable will have it's place
   const { status } = useSession();
 
   const [searchMode, setSearchMode] = useState(false);
   const [filtered, setFiltered] = useState([]);
   const [typeOfView, setTypeOfView] = useState({ list: true, card: false });
+  // const [patientsList, setPatients] = useState([]);
 
   //? filter the patients using the phone number
   const searchPatientPhoneNumber = (e) => {
@@ -37,6 +39,26 @@ function Search({ patientsList, error }) {
       })
     );
   };
+
+  // fetching the data client Side
+  // useEffect(() => {
+  //   const patientsCollectionReference = collection(firestore, "user");
+  //   let patientDocs = [];
+  //   let error = "";
+  //   (async () => {
+  //     try {
+  //       await getDocs(patientsCollectionReference).then((snapshot) => {
+  //         snapshot.forEach((doc) => {
+  //           patientDocs.push({ ...doc.data(), id: doc.id });
+  //         });
+  //       });
+  //     } catch (e) {
+  //       error = e.message;
+  //     } finally {
+  //       setPatients(patientDocs);
+  //     }
+  //   })();
+  // },[patientsList]);
 
   // typeofView function
   const handleTypeOfView = (type) => {
@@ -119,7 +141,7 @@ function Search({ patientsList, error }) {
             <tbody>
               {/* checking if there is no data and giving message accordingly */}
               {((searchMode && filtered.length == 0) ||
-                patientsList.length == 0) && (
+                patientsList?.length == 0) && (
                 <tr className="text-center">
                   <th colSpan={5}>The List Is Empty</th>
                 </tr>
@@ -150,7 +172,7 @@ function Search({ patientsList, error }) {
         <div className="text-white">
           {/* checking if there is no data and giving message accordingly */}
           {((searchMode && filtered.length == 0) ||
-            patientsList.length == 0) && (
+            patientsList?.length == 0) && (
             <div className="text-center mt-10 text-xl font-bold">
               <h1>The List is Empty!</h1>
             </div>
@@ -191,7 +213,7 @@ export default Search;
 
 // ? may be the static function is not approparitate  try the serverside props or render it on the client side
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const patientsCollectionReference = collection(firestore, "user");
   let patientsList = [];
   let error = "";
@@ -211,6 +233,3 @@ export async function getServerSideProps() {
     },
   };
 }
-// add registry date to paylog
-// testing the application
-// makikng the pre-requirements for the dashboard page and calender page
