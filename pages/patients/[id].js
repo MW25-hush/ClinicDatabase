@@ -93,9 +93,9 @@ const PatientInfo = () => {
     setAfterEditValues((prevState) => ({
       ...prevState,
       // updating the chart
-      chart: {
-        ...prevState.chart,
-        [teeth.target.id]: !prevState.chart[teeth.target.id],
+     teethGraph: {
+        ...prevState.teethGraph,
+        [teeth.target.id]: !prevState.teethGraph[teeth.target.id],
       },
     }));
   };
@@ -111,7 +111,7 @@ const PatientInfo = () => {
           last_name: afterEditValues.last_name,
           address: afterEditValues.address,
           ops: afterEditValues.ops,
-          teeth: afterEditValues.teethGraph,
+          teethGraph: afterEditValues.teethGraph,
         })
           .then(() => setEditStatus(false))
           .catch((e) => {
