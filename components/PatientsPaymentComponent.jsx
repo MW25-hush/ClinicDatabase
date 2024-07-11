@@ -2,7 +2,13 @@ import { Field } from "formik";
 import { BiEdit } from "react-icons/bi";
 import { FaHistory } from "react-icons/fa";
 
-const PatientsPayment = ({ editActive,patientData,setAfterEditValues, paymentFunction, afterEditValues }) => {
+const PatientsPayment = ({
+  editActive,
+  patientData,
+  setAfterEditValues,
+  paymentFunction,
+  afterEditValues,
+}) => {
   return (
     <div
       className={`${
@@ -83,6 +89,8 @@ const PatientsPayment = ({ editActive,patientData,setAfterEditValues, paymentFun
                   currentPayment: parseInt(e.target.value),
                 })
               }
+              min="0"
+              // onInput={ }
             />
           </div>
 
